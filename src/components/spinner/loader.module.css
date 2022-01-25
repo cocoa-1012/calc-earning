@@ -1,0 +1,21 @@
+.spinner {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: calc(1 * 22px) calc(0 * 22px) 0 0,
+    calc(0.707 * 22px) calc(0.707 * 22px) 0 1px,
+    calc(0 * 22px) calc(1 * 22px) 0 2px,
+    calc(-0.707 * 22px) calc(0.707 * 22px) 0 3px,
+    calc(-1 * 22px) calc(0 * 22px) 0 4px,
+    calc(-0.707 * 22px) calc(-0.707 * 22px) 0 5px,
+    calc(0 * 22px) calc(-1 * 22px) 0 6px;
+  /* transform: scale(1.5); */
+  animation: s7 1s infinite steps(8);
+}
+
+@keyframes s7 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
