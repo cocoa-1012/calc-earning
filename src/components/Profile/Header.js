@@ -1,9 +1,7 @@
 import React from 'react';
 import shortid from 'shortid';
+import image from '../../images/user/01.png';
 import './header.css';
-const image =
-  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg';
-
 const bioItems = [
   {
     id: shortid(),
