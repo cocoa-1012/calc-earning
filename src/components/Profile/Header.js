@@ -1,65 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import shortid from 'shortid';
-import image from '../../images/user/01.png';
 import './header.css';
-const bioItems = [
-  {
-    id: shortid(),
-    name: 'World Citizen 🌍',
-  },
-  {
-    id: shortid(),
-    name: 'New to TK follow me. ∆',
-  },
-  {
-    id: shortid(),
-    name: 'Singer',
-  },
-  {
-    id: shortid(),
-    name: 'Songwriter',
-  },
-  {
-    id: shortid(),
-    name: 'Producer ',
-  },
-];
-const hobbyItems = [
-  {
-    id: shortid(),
-    name: 'Fashion',
-  },
-  {
-    id: shortid(),
-    name: 'Music',
-  },
-  {
-    id: shortid(),
-    name: 'Dance',
-  },
-  {
-    id: shortid(),
-    name: 'Fitness',
-  },
-  {
-    id: shortid(),
-    name: 'Sports',
-  },
-];
-const Header = () => {
+
+const Header = ({ profilePicture, username, name, category }) => {
+  const [bioItems] = useState([
+    {
+      id: shortid(),
+      name: 'World Citizen 🌍',
+    },
+    {
+      id: shortid(),
+      name: 'New to TK follow me. ∆',
+    },
+    {
+      id: shortid(),
+      name: 'Singer',
+    },
+    {
+      id: shortid(),
+      name: 'Songwriter',
+    },
+    {
+      id: shortid(),
+      name: 'Producer ',
+    },
+  ]);
+
+  const [hobbyItems, setHobbyItems] = useState([]);
+
+  useEffect(() => {
+    setHobbyItems(
+      Object.values(category).map((value) => {
+        return { id: shortid(), name: value };
+      })
+    );
+  }, [category]);
   return (
     <div className='lg:px-20 md:w-10/12 mlb:mx-auto '>
       <div className='md:flex gap-5 items-center'>
         <div className='text-center'>
           <div className='mx-auto w-48 h-48 rounded-full overflow-hidden border-8 border-[#EB7AE5] mb-2'>
-            <img src={image} alt='' className='w-full h-full object-cover' />
+            <img
+              src={profilePicture}
+              alt=''
+              className='w-full h-full object-cover'
+            />
           </div>
           <p className='text-white text-lg font-medium text-center'>
-            @Queenkiley
+            @{username}
           </p>
         </div>
         <div>
-          <h1 className='text-5xl text-white font-medium mb-3'>Queen Kiley</h1>
+          <h1 className='text-5xl text-white font-medium mb-3'>{name}</h1>
           <ul className='flex gap-1 flex-wrap'>
             {bioItems.map((item, index) => (
               <li

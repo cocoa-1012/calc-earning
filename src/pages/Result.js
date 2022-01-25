@@ -11,7 +11,11 @@ import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 
-const Result = () => {
+const Result = ({
+  data: {
+    social_medias: { instagram, tiktok, youtube },
+  },
+}) => {
   return (
     <div
       style={{
@@ -22,8 +26,17 @@ const Result = () => {
       <div className='container mx-auto'>
         <div className='lg:absolute lg:top-[50%] lg:left-[50%] w-full px-0 md:px-5 xs:px-10 xl:w-9/12 2xl:w-9/12 3xl:w-7/12 resultPageWrapper'>
           <div className=''>
-            <Header />
-            <ResultItems />
+            <Header
+              profilePicture={instagram?.profile_pic_url || ''}
+              username={instagram?.username || ''}
+              name={instagram?.full_name || ''}
+              category={instagram?.category || {}}
+            />
+            <ResultItems
+              instagram={instagram}
+              tiktok={tiktok}
+              youtube={youtube}
+            />
             <Footer />
           </div>
         </div>

@@ -1,8 +1,12 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import routes from '../../routes';
 import { addFormValidation } from '../../utils/formValidation';
 import Loader from '../spinner/Loader';
+
 const customStyles = {
   content: {
     top: '50%',
@@ -21,35 +25,50 @@ const customStyles = {
   },
 };
 
-const AddForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [tiktok, setTiktok] = useState('');
-  const [youtube, setYoutube] = useState('');
+const AddForm = ({ setFetchedData }) => {
+  const [name, setName] = useState('a');
+  const [email, setEmail] = useState('a@gm.com');
+  const [instagram, setInstagram] = useState('monir');
+  const [tiktok, setTiktok] = useState('monir');
+  const [youtube, setYoutube] = useState('monir');
   const [errors, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const data = { name, email, instagram, tiktok, youtube };
+    const data = { name, email };
     const { hasError, errors: e } = addFormValidation(data);
     if (hasError) {
       setError(e);
     } else {
       setError({});
     }
-  }, [name, email, instagram, tiktok, youtube]);
+  }, [name, email]);
 
   const submitHandler = (event) => {
     event.preventDefault();
     if (Object.keys(errors).length === 0) {
       setLoading(true);
-      setTimeout(() => {
+      const queryString = () => {
+        const arrayData = { tiktok, instagram, youtube };
+        const string = Object.entries(arrayData)
+          .map(([name, value]) => {
+            return `${name}=${value.split(' ').join('-')}`;
+          })
+          .join('&');
+
+        return string;
+      };
+      axios.get(`https://shoutsyapi.com/?${queryString()}`).then((res) => {
         setLoading(false);
+        setFetchedData(res.data);
         setIsSuccess(true);
-        setTimeout(() => setIsSuccess(false), 3000);
-      }, 3000);
+        setTimeout(() => {
+          setIsSuccess(false);
+          navigate(routes.result);
+        }, 1000);
+      });
     }
   };
 

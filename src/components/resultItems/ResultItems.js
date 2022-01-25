@@ -1,48 +1,47 @@
 import React from 'react';
-import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
 import shortid from 'shortid';
 import Item from './Item';
-const items = [
-  {
-    id: shortid(),
-    username: '@Kevvy124',
-    icon: FaInstagram,
-    iconColor: '#DF4482',
-    price: {
-      from: '$120',
-      to: '300',
-    },
-    follower: '275k',
-    engageRate: '3.49%',
-  },
-  {
-    id: shortid(),
-    username: '@Kevvy124',
-    icon: FaTiktok,
-    iconColor: '#000',
-    price: {
-      from: '$1450',
-      to: '3400',
-    },
-    follower: '25k',
-    engageRate: '1.49%',
-  },
-  {
-    id: shortid(),
-    username: '@Kevvy124',
-    icon: AiOutlineYoutube,
-    iconColor: '#DF4482',
-    price: {
-      from: '$120',
-      to: '300',
-    },
-    follower: '35k',
-    engageRate: '10%',
-  },
-];
 
-const ResultItems = () => {
+const ResultItems = ({ instagram, tiktok, youtube }) => {
+  const items = [
+    {
+      id: shortid(),
+      username: instagram?.username || 'Unknown',
+      icon: FaInstagram,
+      iconColor: '#DF4482',
+      price: {
+        from: instagram?.earnings_low || 0,
+        to: instagram?.earnings_high || 0,
+      },
+      follower: instagram?.followers || 0,
+      engageRate: instagram?.engagement_rate || 0,
+    },
+    {
+      id: shortid(),
+      username: tiktok?.username || 'Unknown',
+      icon: FaTiktok,
+      iconColor: '#000',
+      price: {
+        from: tiktok?.earnings_low || 0,
+        to: tiktok?.earnings_high || 0,
+      },
+      follower: tiktok?.followers || 0,
+      engageRate: tiktok?.engagement_rate || 0,
+    },
+    {
+      id: shortid(),
+      username: youtube?.username || 'Unknown',
+      icon: FaTiktok,
+      iconColor: '#DF4482',
+      price: {
+        from: youtube?.earnings_low || 0,
+        to: youtube?.earnings_high || 0,
+      },
+      follower: youtube?.followers || 0,
+      engageRate: youtube?.engagement_rate || 0,
+    },
+  ];
   return (
     <div className='w-full'>
       <div className='md:flex gap-14 my-24 flex-wrap lg:flex-nowrap'>
