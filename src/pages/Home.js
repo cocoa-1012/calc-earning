@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import overlay from '../../images/bg-overlay.png';
-import bg from '../../images/home-bg.png';
-import img1 from '../../images/icons/icon-1.png';
-import shape1 from '../../images/shapes/shape-01.png';
-import shape2 from '../../images/shapes/shape-02.png';
-import shape3 from '../../images/shapes/shape-03.png';
-import shape4 from '../../images/shapes/shape-04.png';
-import shape5 from '../../images/shapes/shape-05.png';
+import overlay from '../images/bg-overlay.png';
+import bg from '../images/home-bg.png';
+import img1 from '../images/icons/icon-1.png';
+import shape1 from '../images/shapes/shape-01.png';
+import shape2 from '../images/shapes/shape-02.png';
+import shape3 from '../images/shapes/shape-03.png';
+import shape4 from '../images/shapes/shape-04.png';
+import shape5 from '../images/shapes/shape-05.png';
+import routes from '../routes';
 
 const Home = () => {
   return (
@@ -34,7 +35,7 @@ const Home = () => {
           </div>
           <h1 className='home-title'>check how much you can earn</h1>
           <Link
-            to='/'
+            to={routes.add}
             className='mt-16 inline-block md:text-xl btn btn-outline-white'
           >
             Get Started
