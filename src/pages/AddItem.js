@@ -8,7 +8,7 @@ import shape3 from '../images/shapes/add/03.png';
 import shape4 from '../images/shapes/add/04.png';
 import shape5 from '../images/shapes/add/05.png';
 
-const AddItem = () => {
+const AddItem = ({ setFetchedData }) => {
   return (
     <div
       style={{
@@ -26,7 +26,7 @@ const AddItem = () => {
           <h2 className='text-xl xs:text-2xl sm:text-4xl mlb:px-5 xl:px-auto xl:text-4xl text-white font-semibold'>
             PLEASE ENTER IN YOUR INFORMATION BELOW
           </h2>
-          <AddForm />
+          <AddForm setFetchedData={setFetchedData} />
         </div>
       </div>
       <div className='overlays'>

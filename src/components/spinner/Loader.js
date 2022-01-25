@@ -8,7 +8,7 @@ const Loader = () => {
       }}
       className='h-28 flex items-center justify-center'
     >
-      <div class={style.spinner}></div>
+      <div className={style.spinner}></div>
     </div>
   );
 };
