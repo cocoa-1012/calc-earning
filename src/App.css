@@ -1,3 +1,8 @@
 .ReactModal__Overlay {
   background: #22222259 !important;
 }
+@media only screen and (min-width: 1024px) {
+  .resultPageWrapper {
+    transform: translate(-50%, -50%);
+  }
+}
