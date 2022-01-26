@@ -2,30 +2,7 @@ import React, { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import './header.css';
 
-const Header = ({ profilePicture, username, name, category }) => {
-  const [bioItems] = useState([
-    {
-      id: shortid(),
-      name: 'World Citizen 🌍',
-    },
-    {
-      id: shortid(),
-      name: 'New to TK follow me. ∆',
-    },
-    {
-      id: shortid(),
-      name: 'Singer',
-    },
-    {
-      id: shortid(),
-      name: 'Songwriter',
-    },
-    {
-      id: shortid(),
-      name: 'Producer ',
-    },
-  ]);
-
+const Header = ({ profilePicture, username, name, category, biography }) => {
   const [hobbyItems, setHobbyItems] = useState([]);
 
   useEffect(() => {
@@ -52,18 +29,11 @@ const Header = ({ profilePicture, username, name, category }) => {
         </div>
         <div>
           <h1 className='text-5xl text-white font-medium mb-3'>{name}</h1>
-          <ul className='flex gap-1 flex-wrap'>
-            {bioItems.map((item, index) => (
-              <li
-                key={item.id}
-                className={`text-white text-xl lg:text-2xl ${
-                  index + 1 !== bioItems.length ? 'bioSplitter' : ''
-                }`}
-              >
-                {item.name}
-              </li>
-            ))}
-          </ul>
+
+          <p className={`text-white text-xl lg:text-2xl`}>
+            {biography || 'No Biography'}
+          </p>
+
           <ul className='flex gap-2 flex-wrap mt-4'>
             {hobbyItems.map((item) => (
               <li
