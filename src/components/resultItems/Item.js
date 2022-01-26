@@ -1,4 +1,5 @@
 import React from 'react';
+import { abbreviateNumber } from '../../utils/number';
 
 const Item = (props) => {
   const { username, Icon, iconColor, from, to, follower, engageRate } = props;
@@ -17,18 +18,24 @@ const Item = (props) => {
       </div>
 
       <p className='text-4xl text-center text-white font-bold'>
-        {from} - {to}
+        {'$'}
+        {from} - {'$'}
+        {to}
       </p>
       <p className='text-center text-white text-lg mt-1 mb-2'>
         Payout Per Post
       </p>
       <div className='flex justify-between text-center'>
         <div>
-          <p className='text-4xl font-semibold text-white'>{follower}</p>
+          <p className='text-4xl font-semibold text-white'>
+            {abbreviateNumber(follower)}
+          </p>
           <p className='text-white text-xs'>Followers</p>
         </div>
         <div>
-          <p className='text-4xl font-semibold text-white'>{engageRate}</p>
+          <p className='text-4xl font-semibold text-white'>
+            {engageRate.toFixed(2)}%
+          </p>
           <p className='text-white text-xs'>Engagement Rate</p>
         </div>
       </div>

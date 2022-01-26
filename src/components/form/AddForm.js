@@ -26,11 +26,11 @@ const customStyles = {
 };
 
 const AddForm = ({ setFetchedData }) => {
-  const [name, setName] = useState('a');
-  const [email, setEmail] = useState('a@gm.com');
-  const [instagram, setInstagram] = useState('monir');
-  const [tiktok, setTiktok] = useState('monir');
-  const [youtube, setYoutube] = useState('monir');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [tiktok, setTiktok] = useState('');
+  const [youtube, setYoutube] = useState('');
   const [errors, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

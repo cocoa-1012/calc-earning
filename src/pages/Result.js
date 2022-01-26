@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import ResultItems from '../components/resultItems/ResultItems';
@@ -10,12 +11,16 @@ import shape3 from '../images/shapes/result/03.png';
 import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
+import routes from '../routes';
 
-const Result = ({
-  data: {
+const Result = ({ data }) => {
+  if (Object.keys(data).length === 0) {
+    return <Navigate to={routes.add} />;
+  }
+
+  const {
     social_medias: { instagram, tiktok, youtube },
-  },
-}) => {
+  } = data;
   return (
     <div
       style={{
@@ -31,11 +36,12 @@ const Result = ({
               username={instagram?.username || ''}
               name={instagram?.full_name || ''}
               category={instagram?.category || {}}
+              biography={instagram?.biography || 'No Biography'}
             />
             <ResultItems
-              instagram={instagram}
-              tiktok={tiktok}
-              youtube={youtube}
+              instagram={instagram ? instagram : {}}
+              tiktok={tiktok ? tiktok : {}}
+              youtube={youtube ? youtube : {}}
             />
             <Footer />
           </div>
