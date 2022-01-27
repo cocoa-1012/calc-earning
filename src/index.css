@@ -11,8 +11,9 @@
   @apply bg-transparent border border-gray-200 py-3 px-5 text-white rounded-md hover:bg-white hover:text-black;
 }
 .home-title {
-  @apply uppercase text-white font-bold mx-auto
-    w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-9/12 2xl:w-10/12 3xl:w-9/12  
+  @apply uppercase text-white font-bold mx-auto 
+    w-full sm:w-8/12 md:w-7/12 lg:w-7/12 xl:w-7/12 2xl:w-8/12 3xl:w-7/12  
+    px-4 xs:px-0 mt-10
    text-4xl xs:text-5xl sm:text-5xl md:text-6xl mlb:text-7xl xl:text-8xl 2xl:text-9xl font-gobold;
 }
 .home-shape {
@@ -56,4 +57,7 @@
 }
 .font-gobold {
   font-family: Gobold;
+}
+.leading-1-6 {
+  line-height: 1.625 !important;
 }

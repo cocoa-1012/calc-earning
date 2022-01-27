@@ -1,24 +1,66 @@
+import { motion } from 'framer-motion';
 import React from 'react';
+import { defaultAnimationsResult } from '../../utils/defaultAnimations';
+import { durationForResult } from '../../utils/duration';
+import { abbreviateNumber } from '../../utils/number';
 
-const SingleCard = () => {
+const SingleCard = ({ followers, engagementRate, from, to, start = 9 }) => {
   return (
     <div className='w-full sm:w-[24rem] md:w-[26rem] lg:w-[35rem] py-8  sm:mx-auto text-center box-border rounded-3xl mb-4 mt-5'>
-      <p className='text-5xl md:text-7xl lg:text-8xl text-center text-white font-bold'>
-        $120 - $300
-      </p>
-      <p className='text-center text-white md:text-xl lg:text-2xl text-lg mt-1 mb-2'>
+      <motion.p
+        {...defaultAnimationsResult}
+        transition={{ duration: 1, delay: durationForResult()[start + 2] }}
+        className='text-5xl md:text-7xl lg:text-8xl text-center text-white font-bold'
+      >
+        {'$'}
+        {from} - {'$'}
+        {to}
+      </motion.p>
+      <motion.p
+        {...defaultAnimationsResult}
+        transition={{ duration: 1, delay: durationForResult()[start + 3] }}
+        className='text-center text-white md:text-xl lg:text-2xl text-lg mt-1 mb-2'
+      >
         Estimated payout per post
-      </p>
-      <div className='flex justify-between text-center'>
+      </motion.p>
+      <motion.div
+        {...defaultAnimationsResult}
+        transition={{ duration: 1, delay: durationForResult()[start + 4] }}
+        className='flex justify-between text-center'
+      >
         <div>
-          <p className='text-4xl lg:text-5xl font-semibold text-white'>275K</p>
-          <p className='text-white text-xs lg:text-xl'>Followers</p>
+          <motion.p
+            {...defaultAnimationsResult}
+            transition={{ duration: 1, delay: durationForResult()[start + 5] }}
+            className='text-4xl lg:text-5xl font-semibold text-white'
+          >
+            {abbreviateNumber(followers)}
+          </motion.p>
+          <motion.p
+            {...defaultAnimationsResult}
+            transition={{ duration: 1, delay: durationForResult()[start + 6] }}
+            className='text-white text-xs lg:text-xl'
+          >
+            Followers
+          </motion.p>
         </div>
         <div>
-          <p className='text-4xl lg:text-5xl font-semibold text-white'>3.49%</p>
-          <p className='text-white text-xs lg:text-xl'>Engagement Rate</p>
+          <motion.p
+            {...defaultAnimationsResult}
+            transition={{ duration: 1, delay: durationForResult()[start + 7] }}
+            className='text-4xl lg:text-5xl font-semibold text-white'
+          >
+            {engagementRate}%
+          </motion.p>
+          <motion.p
+            {...defaultAnimationsResult}
+            transition={{ duration: 1, delay: durationForResult()[start + 8] }}
+            className='text-white text-xs lg:text-xl'
+          >
+            Engagement Rate
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

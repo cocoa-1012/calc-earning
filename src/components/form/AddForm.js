@@ -56,8 +56,10 @@ const AddForm = ({ setFetchedData }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    if (Object.keys(errors).length === 0) {
+    const data = { name, email, instagram, tiktok, youtube };
+    const { hasError } = addFormValidation(data);
+    setShowError(hasError);
+    if (!hasError) {
       setLoading(true);
       const queryString = () => {
         const arrayData = { tiktok, instagram, youtube };
@@ -95,7 +97,6 @@ const AddForm = ({ setFetchedData }) => {
         }, 1000);
       });
     } else {
-      setShowError(true);
       toast.error('Please Fill all required field', {
         position: 'top-center',
         autoClose: 3000,
