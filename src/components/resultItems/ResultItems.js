@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
-import { useEffect } from 'react/cjs/react.development';
+import {} from 'react/cjs/react.development';
 import shortid from 'shortid';
 import Item from './Item';
 
