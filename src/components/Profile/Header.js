@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import { durationForResult } from '../../utils/duration';
+import { sliceString } from '../../utils/string';
 import './header.css';
 
 const Header = ({
@@ -82,7 +83,7 @@ const Header = ({
             transition={{ duration: 1, delay: durationForResult()[3] }}
             className={`text-white text-xl lg:text-2xl  font-dm-sans font-bold`}
           >
-            {biography || 'No Biography'}
+            {sliceString(biography) || 'No Biography'}
           </motion.p>
 
           <motion.ul

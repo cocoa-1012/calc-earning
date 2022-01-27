@@ -56,10 +56,20 @@ const Home = () => {
                 Get Started
               </Link>
             </motion.span>
+            <p className='text-sm text-white font-dm-sans font-bold mt-20 px-4 sm:px-10 md:px-0'>
+              By using this calculator you agree to recieve email notification
+              regarding Shoutsy App launch. We won’t spam.
+            </p>
           </motion.div>
         </div>
       </motion.div>
-      <div className='overlays'>
+      <motion.div
+        className='overlays'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
         <div className='absolute right-0 bottom-0 home-shape lea'>
           <img src={shape1} alt='' />
         </div>
@@ -75,7 +85,7 @@ const Home = () => {
         <div className='absolute bottom-0 right-5 lg:right-12  home-shape'>
           <img src={shape5} alt='' />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
