@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
+import { useEffect } from 'react/cjs/react.development';
 import shortid from 'shortid';
 import Item from './Item';
 
-const ResultItems = ({ instagram, tiktok, youtube }) => {
+const ResultItems = (props) => {
+  const { instagram, tiktok, youtube, count, setCount } = props;
   const instagramData = {
     id: shortid(),
     username: instagram?.username || 'Unknown',
@@ -40,6 +42,19 @@ const ResultItems = ({ instagram, tiktok, youtube }) => {
     follower: youtube?.followers || 0,
     engageRate: youtube?.engagement_rate || 0,
   };
+  const [initCount, setIntiCount] = useState(0);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setIntiCount(count), []);
+
+  useEffect(() => {
+    let countForThisComponent = 0;
+    if (tiktok.statue === 'success') countForThisComponent += 1;
+    if (youtube.statue === 'success') countForThisComponent += 1;
+    if (instagram.statue === 'success') countForThisComponent += 1;
+    setCount((prev) => prev + countForThisComponent);
+  }, [instagram, youtube, tiktok, setCount]);
+
   return (
     <div className='w-full'>
       <div className='md:flex gap-14 my-24 flex-wrap lg:flex-nowrap'>
@@ -54,6 +69,7 @@ const ResultItems = ({ instagram, tiktok, youtube }) => {
             to={instagramData.price.to}
             follower={instagramData.follower}
             engageRate={instagramData.engageRate}
+            delayCount={initCount + 1}
           />
         )}
         {tiktok.status === 'success' && (
@@ -67,6 +83,7 @@ const ResultItems = ({ instagram, tiktok, youtube }) => {
             to={tiktokData.price.to}
             follower={tiktokData.follower}
             engageRate={tiktokData.engageRate}
+            delayCount={initCount + 2}
           />
         )}
         {youtube.status === 'success' && (
@@ -80,6 +97,7 @@ const ResultItems = ({ instagram, tiktok, youtube }) => {
             to={youtubeData.price.to}
             follower={youtubeData.follower}
             engageRate={youtubeData.engageRate}
+            delayCount={initCount + 3}
           />
         )}
       </div>

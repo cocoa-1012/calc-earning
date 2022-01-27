@@ -1,10 +1,26 @@
+import { motion } from 'framer-motion';
 import React from 'react';
+import { defaultAnimationsResult } from '../../utils/defaultAnimations';
+import { durationForResult } from '../../utils/duration';
 import { abbreviateNumber } from '../../utils/number';
 
 const Item = (props) => {
-  const { username, Icon, iconColor, from, to, follower, engageRate } = props;
+  const {
+    username,
+    Icon,
+    iconColor,
+    from,
+    to,
+    follower,
+    engageRate,
+    delayCount,
+  } = props;
   return (
-    <div className='w-full md:w-[19rem] lg:w-1/3 border-[3px] px-8 py-7 box-border rounded-3xl mb-4'>
+    <motion.div
+      {...defaultAnimationsResult}
+      transition={{ duration: 1, delay: durationForResult()[delayCount] }}
+      className='w-full md:w-[19rem] lg:w-1/3 border-[3px] px-8 py-7 box-border rounded-3xl mb-4'
+    >
       <div className='flex gap-2 items-center text-3xl mb-5'>
         <p
           className='mt-4 text-4xl'
@@ -39,7 +55,7 @@ const Item = (props) => {
           <p className='text-white text-xs'>Engagement Rate</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
