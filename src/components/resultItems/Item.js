@@ -23,7 +23,7 @@ const Item = (props) => {
     >
       <div className='flex gap-2 items-center text-3xl mb-5'>
         <p
-          className='mt-4 text-4xl'
+          className='text-4xl'
           style={{
             color: iconColor,
           }}
