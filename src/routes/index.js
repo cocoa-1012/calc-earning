@@ -2,7 +2,7 @@ const routes = {
   home: '/',
   add: '/add',
   result: '/result',
-  single: '/single/:name/:keyword',
+  single: '/:name/:keyword',
 };
 
 export default routes;

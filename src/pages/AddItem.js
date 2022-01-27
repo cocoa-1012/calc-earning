@@ -40,7 +40,13 @@ const AddItem = ({ setFetchedData }) => {
           </motion.div>
         </div>
       </div>
-      <div className='overlays'>
+      <motion.div
+        className='overlays'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
         <div className='absolute left-0 bottom-0 w-20 sm:w-16 md:w-32 mlb:w-36 lg:w-40 xl:w-auto '>
           <img src={shape1} alt='' />
         </div>
@@ -60,7 +66,7 @@ const AddItem = ({ setFetchedData }) => {
         <div className='absolute bottom-0 right-0 w-16  sm:w-20 md:w-28 mlb:w-32 lg:w-36 xl:w-auto '>
           <img src={shape5} alt='' />
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

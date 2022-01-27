@@ -71,6 +71,9 @@ const Result = ({ data }) => {
     if (tiktok?.biography) {
       return tiktok.biography;
     }
+    if (tiktok?.about) {
+      return tiktok.about;
+    }
     return '';
   };
 
@@ -103,7 +106,13 @@ const Result = ({ data }) => {
           </motion.div>
         </div>
       </div>
-      <div className='overlays'>
+      <motion.div
+        className='overlays'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
         <div className='absolute left-0 bottom-0 w-12 xs:w-16 lg:w-20 xl:w-auto '>
           <img src={shape1} alt='' />
         </div>
@@ -126,7 +135,7 @@ const Result = ({ data }) => {
         <div className='absolute top-11 md:top-24 md:hidden mlb:block left-0 w-12  sm:w-20 md:w-28 mlb:w-32 lg:w-36 xl:w-auto '>
           <img src={shape6} alt='' />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

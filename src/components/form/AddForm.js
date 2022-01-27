@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import routes from '../../routes';
 import { addFormValidation } from '../../utils/formValidation';
+import { removeAtRate } from '../../utils/string';
 import Loader from '../spinner/Loader';
 
 const customStyles = {
@@ -29,11 +30,11 @@ const customStyles = {
 };
 
 const AddForm = ({ setFetchedData }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [tiktok, setTiktok] = useState('');
-  const [youtube, setYoutube] = useState('');
+  const [name, setName] = useState('a');
+  const [email, setEmail] = useState('a@a.cm');
+  const [instagram, setInstagram] = useState('@mikirahmuse');
+  const [tiktok, setTiktok] = useState('@mikirahmuse');
+  const [youtube, setYoutube] = useState('UCoOjH8D2XAgjzQlneM2W0EQ');
   const [errors, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -61,11 +62,25 @@ const AddForm = ({ setFetchedData }) => {
     setShowError(hasError);
     if (!hasError) {
       setLoading(true);
+      const arrayOfItems = Object.entries({
+        tiktok,
+        instagram,
+        youtube,
+      }).filter(([key, value]) => !!value);
+      if (arrayOfItems.length === 1) {
+        setLoading(false);
+        setIsSuccess(false);
+        const firstItem = arrayOfItems[0];
+        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}`);
+        return;
+      }
       const queryString = () => {
         const arrayData = { tiktok, instagram, youtube };
+
         const string = Object.entries(arrayData)
           .map(([name, value]) => {
-            return `${name}=${value.split(' ').join('-')}`;
+            const filterValue = removeAtRate(value);
+            return `${name}=${filterValue.split(' ').join('-')}`;
           })
           .join('&');
 
@@ -156,7 +171,7 @@ const AddForm = ({ setFetchedData }) => {
               <div className=' inputWrapper'>
                 <input
                   type='text'
-                  placeholder='Instagram'
+                  placeholder='@Instagram'
                   className='input-box'
                   value={instagram}
                   onChange={(e) => {
@@ -175,7 +190,7 @@ const AddForm = ({ setFetchedData }) => {
               <div className=' inputWrapper'>
                 <input
                   type='text'
-                  placeholder='Tiktok'
+                  placeholder='@Tiktok'
                   className='input-box'
                   value={tiktok}
                   onChange={(e) => {
@@ -196,7 +211,7 @@ const AddForm = ({ setFetchedData }) => {
               <div className='inputWrapper'>
                 <input
                   type='text'
-                  placeholder='Youtube ID'
+                  placeholder='@Youtube ID'
                   className='input-box'
                   value={youtube}
                   onChange={(e) => setYoutube(e.target.value)}
