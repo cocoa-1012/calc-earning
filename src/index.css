@@ -61,3 +61,8 @@
 .leading-1-2 {
   line-height: 1.2 !important;
 }
+.profileImageBg {
+  /* background: linear-gradient(0deg, #a95865, #eb4e67, #f25dff);
+   */
+  background: linear-gradient(190deg, #eb4e67, #f25dff);
+}

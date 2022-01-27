@@ -37,13 +37,15 @@ const Header = ({
             <motion.div
               {...defaultAnimationsResult}
               transition={{ duration: 1, delay: durationForResult()[0] }}
-              className='mx-auto w-48 h-48 rounded-full overflow-hidden border-8 border-[#EB7AE5] mb-2'
+              className='w-52 h-52 from-[#A95865] via-[#EB4E67] to-[#F25DFF] rounded-full flex items-center justify-center profileImageBg'
             >
-              <img
-                src={profilePicture}
-                alt=''
-                className='w-full h-full object-cover'
-              />
+              <div className='mx-auto w-48 h-48 rounded-full overflow-hidden border-1'>
+                <img
+                  src={profilePicture}
+                  alt=''
+                  className='w-full h-full object-cover'
+                />
+              </div>
             </motion.div>
           )}
           <motion.p
