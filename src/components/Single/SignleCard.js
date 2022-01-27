@@ -19,7 +19,7 @@ const SingleCard = ({ followers, engagementRate, from, to, start = 9 }) => {
       <motion.p
         {...defaultAnimationsResult}
         transition={{ duration: 1, delay: durationForResult()[start + 3] }}
-        className='text-center text-white md:text-xl lg:text-2xl text-lg mt-1 mb-2'
+        className='text-center text-white md:text-xl lg:text-3xl xl:text-4xl text-lg mt-1 mb-2'
       >
         Estimated payout per post
       </motion.p>
