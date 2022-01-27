@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
-import {} from 'react/cjs/react.development';
 import shortid from 'shortid';
 import Item from './Item';
 
@@ -33,7 +33,7 @@ const ResultItems = (props) => {
   const youtubeData = {
     id: shortid(),
     username: youtube?.username || 'Unknown',
-    icon: FaTiktok,
+    icon: AiOutlineYoutube,
     iconColor: '#DF4482',
     price: {
       from: youtube?.earnings_low || 0,
@@ -55,9 +55,24 @@ const ResultItems = (props) => {
     setCount((prev) => prev + countForThisComponent);
   }, [instagram, youtube, tiktok, setCount]);
 
+  const allItemClasses = () => {
+    let extraClasses = '';
+    const array = Object.values({ tiktok, youtube, instagram }).filter(
+      (item) => item.status === 'success'
+    );
+    if (array.length === 1) {
+      extraClasses = 'justify-center';
+    }
+    if (array.length === 2) {
+      extraClasses = 'justify-between';
+    }
+    console.log(array);
+    return `md:flex gap-14 my-24 flex-wrap lg:flex-nowrap ${extraClasses}`;
+  };
+
   return (
     <div className='w-full'>
-      <div className='md:flex gap-14 my-24 flex-wrap lg:flex-nowrap'>
+      <div className={allItemClasses()}>
         {instagram.status === 'success' && (
           <Item
             key={instagramData.id}

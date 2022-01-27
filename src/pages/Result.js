@@ -23,6 +23,57 @@ const Result = ({ data }) => {
   const {
     social_medias: { instagram, tiktok, youtube },
   } = data;
+
+  const profilePicture = () => {
+    if (instagram?.profile_pic_url) {
+      return instagram?.profile_pic_url;
+    }
+    if (tiktok?.avatar_url) {
+      return tiktok?.avatar_url;
+    }
+    if (tiktok?.profile_pic_url) {
+      return tiktok?.profile_pic_url;
+    }
+    if (youtube?.avatar_url) {
+      return youtube?.avatar_url;
+    }
+    return '';
+  };
+  const headerName = () => {
+    console.log(instagram);
+    if (instagram?.full_name) {
+      return instagram?.full_name;
+    }
+    if (tiktok?.username) {
+      return tiktok?.username;
+    }
+    if (youtube?.username) {
+      return youtube?.username;
+    }
+    return '';
+  };
+  const headerUsername = () => {
+    if (instagram?.username) {
+      return instagram?.username;
+    }
+    if (tiktok?.username) {
+      return tiktok.username;
+    }
+    if (youtube?.username) {
+      return youtube.username;
+    }
+    return '';
+  };
+  const biography = () => {
+    if (instagram?.biography) {
+      return instagram?.biography;
+    }
+    if (tiktok?.biography) {
+      return tiktok.biography;
+    }
+    return '';
+  };
+
   return (
     <div
       style={{
@@ -34,11 +85,11 @@ const Result = ({ data }) => {
         <div className='lg:absolute lg:top-[50%] lg:left-[50%] w-full px-0 md:px-5 xs:px-10 xl:w-9/12 2xl:w-9/12 3xl:w-7/12 resultPageWrapper'>
           <motion.div>
             <Header
-              profilePicture={instagram?.profile_pic_url || ''}
-              username={instagram?.username || ''}
-              name={instagram?.full_name || ''}
+              profilePicture={profilePicture()}
+              username={headerUsername()}
+              name={headerName()}
               category={instagram?.category || {}}
-              biography={instagram?.biography || 'No Biography'}
+              biography={biography()}
               countAnimationDelay={setCount}
             />
             <ResultItems

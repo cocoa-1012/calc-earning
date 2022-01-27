@@ -33,7 +33,7 @@ const AddItem = ({ setFetchedData }) => {
             }}
             exit={{ y: '-100vh' }}
           >
-            <h2 className='text-xl xs:text-2xl sm:text-4xl mlb:px-5 xl:px-auto xl:text-4xl text-white font-semibold'>
+            <h2 className='text-xl xs:text-2xl sm:text-4xl mlb:px-5 xl:px-auto xl:text-4xl text-white font-bold font-dm-sans '>
               PLEASE ENTER IN YOUR INFORMATION BELOW
             </h2>
             <AddForm setFetchedData={setFetchedData} />

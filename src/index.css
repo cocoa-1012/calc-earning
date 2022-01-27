@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 .btn-outline-white2 {
-  @apply bg-transparent border border-gray-200 py-3 mt-8 md:mt-20 inline-block px-9 text-white rounded-md hover:bg-white hover:text-black;
+  @apply bg-transparent border border-gray-200 py-3 mt-8 md:mt-20 
+  inline-block px-9 text-white rounded-md hover:bg-white hover:text-black 
+  font-dm-sans font-bold;
 }
 .btn-outline-white {
-  @apply bg-transparent border border-gray-200 py-2 px-4 text-white rounded-md hover:bg-white hover:text-black;
+  @apply bg-transparent border border-gray-200 py-3 px-5 text-white rounded-md hover:bg-white hover:text-black;
 }
 .home-title {
   @apply uppercase text-white font-bold mx-auto
     w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-9/12 2xl:w-10/12 3xl:w-9/12  
-   text-4xl xs:text-5xl sm:text-5xl md:text-6xl mlb:text-7xl xl:text-8xl 2xl:text-9xl;
+   text-4xl xs:text-5xl sm:text-5xl md:text-6xl mlb:text-7xl xl:text-8xl 2xl:text-9xl font-gobold;
 }
 .home-shape {
   @apply w-20 sm:w-28 md:w-32 mlb:w-36 lg:w-40 xl:w-auto;
@@ -22,7 +24,8 @@
     w-full
     pt-4 pb-2 
     text-2xl sm:text-3xl md:text-4xl 
-    placeholder:text-white;
+    placeholder:text-white
+    font-dm-sans font-medium;
 }
 .inputWrapper {
   @apply w-full min-h-[100px] md:min-h-[130px] md:w-1/2;
@@ -33,4 +36,24 @@
 }
 .add-shape {
   @apply w-20 sm:w-28 md:w-32 mlb:w-36 lg:w-40 xl:w-auto;
+}
+
+/* custom fonts */
+@font-face {
+  font-family: 'Gobold';
+  src: url('./font/gobold-bold.woff');
+}
+
+.font-dm-sans {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+.font-popins {
+  font-family: 'Poppins', sans-serif;
+}
+.font-gobold {
+  font-family: Gobold;
 }
