@@ -1,4 +1,6 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import SingleCard from '../components/Single/SignleCard';
@@ -10,8 +12,79 @@ import shape3 from '../images/shapes/result/03.png';
 import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
+import routes from '../routes';
+const allowedName = ['instagram', 'tiktok', 'youtube'];
+const footerAnimationDelay = {
+  instagram: 29,
+  tiktok: 23,
+  youtube: 27,
+};
 
-const Result = () => {
+const elementOffSetCount = {
+  instagram: 9,
+  tiktok: 3,
+  youtube: 2,
+};
+
+const Single = () => {
+  const { name, keyword } = useParams();
+  const [data, setData] = useState({});
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`https://shoutsyapi.com/?${name}=${keyword}`).then((res) => {
+      const found = res.data.social_medias[name];
+      console.log(found);
+      if (found.status !== 'success') {
+        navigate(routes.home + "?error='Not found'");
+        return;
+      }
+      setData(found);
+      return;
+    });
+  }, [name, keyword, navigate]);
+  const profilePicture = useCallback(() => {
+    let value = '';
+    if (data?.profile_pic_url) {
+      value = data?.profile_pic_url;
+    }
+    if (data?.avatar_url) {
+      value = data?.avatar_url;
+    }
+
+    return value;
+  }, [data]);
+  const headerName = useCallback(() => {
+    let value = '';
+    if (data?.full_name) {
+      value = data?.full_name;
+    }
+    if (data?.username) {
+      value = data?.username;
+    }
+
+    return value;
+  }, [data]);
+  const headerUsername = useCallback(() => {
+    if (data?.username) {
+      return data?.username;
+    }
+
+    return '';
+  }, [data]);
+  const biography = useCallback(() => {
+    if (data?.biography) {
+      return data?.biography;
+    }
+
+    return '';
+  }, [data]);
+
+  if (!allowedName.includes(name.toLocaleLowerCase())) {
+    return <Navigate to={routes.home + "?error='Invalid name'"} />;
+  }
+
   return (
     <div
       style={{
@@ -22,10 +95,27 @@ const Result = () => {
       <div className='container mx-auto'>
         <div className='lg:absolute lg:top-[50%] lg:left-[50%] w-full px-0 md:px-5 xs:px-10 xl:w-9/12 2xl:w-9/12 3xl:w-7/12 resultPageWrapper'>
           <div className=''>
-            <Header />
-            <SingleCard />
+            {Object.keys(data).length > 0 && (
+              <>
+                <Header
+                  profilePicture={profilePicture()}
+                  username={headerUsername()}
+                  name={headerName()}
+                  category={data?.category ? data.category : {}}
+                  biography={biography()}
+                  countAnimationDelay={() => {}}
+                />
+                <SingleCard
+                  followers={data?.followers}
+                  engagementRate={data?.engagement_rate?.toFixed(2)}
+                  from={data?.earnings_low}
+                  to={data?.earnings_high}
+                  start={elementOffSetCount[name]}
+                />
+              </>
+            )}
 
-            <Footer />
+            <Footer count={footerAnimationDelay[name]} />
           </div>
         </div>
       </div>
@@ -57,4 +147,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default Single;

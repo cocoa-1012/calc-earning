@@ -45,7 +45,7 @@ const Home = () => {
                 INFLUENCER CALCULATOR
               </p>
             </div>
-            <motion.h1 className='home-title'>
+            <motion.h1 className='home-title leading-1-6'>
               check how much you can earn
             </motion.h1>
             <motion.span className='inline-block'>
@@ -60,7 +60,7 @@ const Home = () => {
         </div>
       </motion.div>
       <div className='overlays'>
-        <div className='absolute right-0 bottom-0 home-shape'>
+        <div className='absolute right-0 bottom-0 home-shape lea'>
           <img src={shape1} alt='' />
         </div>
         <div className='absolute top-6 left-0 home-shape'>
