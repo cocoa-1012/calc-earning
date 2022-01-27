@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import AddForm from '../components/form/AddForm';
 import bg from '../images/add-bg.png';
@@ -10,7 +11,7 @@ import shape5 from '../images/shapes/add/05.png';
 
 const AddItem = ({ setFetchedData }) => {
   return (
-    <div
+    <motion.div
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}
@@ -23,10 +24,20 @@ const AddItem = ({ setFetchedData }) => {
             transform: 'translate(-50% , -50%)',
           }}
         >
-          <h2 className='text-xl xs:text-2xl sm:text-4xl mlb:px-5 xl:px-auto xl:text-4xl text-white font-semibold'>
-            PLEASE ENTER IN YOUR INFORMATION BELOW
-          </h2>
-          <AddForm setFetchedData={setFetchedData} />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.5,
+            }}
+            exit={{ y: '-100vh' }}
+          >
+            <h2 className='text-xl xs:text-2xl sm:text-4xl mlb:px-5 xl:px-auto xl:text-4xl text-white font-semibold'>
+              PLEASE ENTER IN YOUR INFORMATION BELOW
+            </h2>
+            <AddForm setFetchedData={setFetchedData} />
+          </motion.div>
         </div>
       </div>
       <div className='overlays'>
@@ -50,7 +61,7 @@ const AddItem = ({ setFetchedData }) => {
           <img src={shape5} alt='' />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

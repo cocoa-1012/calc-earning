@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import overlay from '../images/bg-overlay.png';
@@ -18,30 +19,46 @@ const Home = () => {
       }}
       className='bg-cover bg-center min-h-screen'
     >
-      <div className='container mx-auto text-center'>
+      <motion.div
+        className='container mx-auto text-center'
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ delay: 0.6, duration: 1 }}
+      >
         <div
           className='absolute top-[50%] left-[50%] w-full'
           style={{
             transform: 'translate(-50% , -50%)',
           }}
         >
-          <div className='mb-10'>
-            <div className='flex justify-center items-center'>
-              <img src={img1} alt='' />
-            </div>
-            <p className='uppercase text-xl sm:text-2xl font-semibold text-white mt-10'>
-              INFLUENCER CALCULATOR
-            </p>
-          </div>
-          <h1 className='home-title'>check how much you can earn</h1>
-          <Link
-            to={routes.add}
-            className='mt-16 inline-block md:text-xl btn btn-outline-white'
+          <motion.div
+            className='mb-10'
+            initial={{ y: 0 }}
+            exit={{ y: '-15vh' }}
+            transition={{ duration: 1 }}
           >
-            Get Started
-          </Link>
+            <div>
+              <div className='flex justify-center items-center'>
+                <img src={img1} alt='' />
+              </div>
+              <p className='uppercase text-xl sm:text-2xl font-semibold text-white mt-10'>
+                INFLUENCER CALCULATOR
+              </p>
+            </div>
+            <motion.h1 className='home-title'>
+              check how much you can earn
+            </motion.h1>
+            <motion.span className='inline-block'>
+              <Link
+                to={routes.add}
+                className='mt-16 inline-block md:text-xl btn btn-outline-white'
+              >
+                Get Started
+              </Link>
+            </motion.span>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
       <div className='overlays'>
         <div className='absolute right-0 bottom-0 home-shape'>
           <img src={shape1} alt='' />
