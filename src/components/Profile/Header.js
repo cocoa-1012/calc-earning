@@ -12,6 +12,8 @@ const Header = ({
   category,
   biography,
   countAnimationDelay,
+  Icon,
+  iconColor,
 }) => {
   const [hobbyItems, setHobbyItems] = useState([]);
 
@@ -49,7 +51,19 @@ const Header = ({
             transition={{ duration: 1, delay: durationForResult()[1] }}
             className='text-white text-lg text-center  font-dm-sans font-bold'
           >
-            @{username}
+            {Icon ? (
+              <div className='flex gap-1 items-center'>
+                <Icon
+                  style={{
+                    color: iconColor ? iconColor : '',
+                    fontSize: '30px',
+                  }}
+                />
+                <p>@{username}</p>
+              </div>
+            ) : (
+              <span>@{username}</span>
+            )}
           </motion.p>
         </div>
         <div>

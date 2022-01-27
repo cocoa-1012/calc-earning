@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
+import { AiOutlineYoutube } from 'react-icons/ai';
+import { FaInstagram, FaTiktok } from 'react-icons/fa';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
@@ -24,6 +26,17 @@ const elementOffSetCount = {
   instagram: 9,
   tiktok: 3,
   youtube: 2,
+};
+
+const icons = {
+  instagram: FaInstagram,
+  tiktok: FaTiktok,
+  youtube: AiOutlineYoutube,
+};
+const iconColors = {
+  instagram: '#DF4482',
+  tiktok: '#000',
+  youtube: '#DF4482',
 };
 
 const Single = () => {
@@ -104,6 +117,8 @@ const Single = () => {
                   category={data?.category ? data.category : {}}
                   biography={biography()}
                   countAnimationDelay={() => {}}
+                  Icon={icons[name]}
+                  iconColor={iconColors[name] || '#000'}
                 />
                 <SingleCard
                   followers={data?.followers}
@@ -115,7 +130,7 @@ const Single = () => {
               </>
             )}
 
-            <Footer count={footerAnimationDelay[name]} />
+            <Footer count={footerAnimationDelay[name]} isSingle />
           </div>
         </div>
       </div>
