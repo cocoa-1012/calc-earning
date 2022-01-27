@@ -45,8 +45,8 @@ const Home = () => {
                 INFLUENCER CALCULATOR
               </p>
             </div>
-            <motion.h1 className='home-title leading-1-6'>
-              check how much you can earn
+            <motion.h1 className='home-title leading-1-2'>
+              check how much <br /> you can earn
             </motion.h1>
             <motion.span className='inline-block'>
               <Link
