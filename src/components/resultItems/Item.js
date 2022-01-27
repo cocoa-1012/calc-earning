@@ -30,29 +30,35 @@ const Item = (props) => {
         >
           <Icon />
         </p>
-        <p className='text-white'>{username}</p>
+        <p className='text-white font-dm-sans font-bold font-dm-sans'>
+          {username}
+        </p>
       </div>
 
-      <p className='text-4xl text-center text-white font-bold'>
+      <p className='text-4xl text-center text-white font-dm-sans font-bold'>
         {'$'}
         {from} - {'$'}
         {to}
       </p>
-      <p className='text-center text-white text-lg mt-1 mb-2'>
+      <p className='text-center text-white text-lg mt-1 mb-2 font-dm-sans font-normal'>
         Payout Per Post
       </p>
       <div className='flex justify-between text-center'>
         <div>
-          <p className='text-4xl font-semibold text-white'>
+          <p className='text-4xl text-white font-dm-sans font-bold'>
             {abbreviateNumber(follower)}
           </p>
-          <p className='text-white text-xs'>Followers</p>
+          <p className='text-white text-xs font-dm-sans font-normal'>
+            Followers
+          </p>
         </div>
         <div>
-          <p className='text-4xl font-semibold text-white'>
+          <p className='text-4xl text-white font-dm-sans font-bold'>
             {engageRate.toFixed(2)}%
           </p>
-          <p className='text-white text-xs'>Engagement Rate</p>
+          <p className='text-white text-xs font-dm-sans font-normal'>
+            Engagement Rate
+          </p>
         </div>
       </div>
     </motion.div>

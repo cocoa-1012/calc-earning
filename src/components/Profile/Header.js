@@ -31,21 +31,23 @@ const Header = ({
     <div className='lg:px-20 md:w-10/12 mlb:mx-auto '>
       <div className='md:flex gap-5 items-center'>
         <div className='text-center'>
-          <motion.div
-            {...defaultAnimationsResult}
-            transition={{ duration: 1, delay: durationForResult()[0] }}
-            className='mx-auto w-48 h-48 rounded-full overflow-hidden border-8 border-[#EB7AE5] mb-2'
-          >
-            <img
-              src={profilePicture}
-              alt=''
-              className='w-full h-full object-cover'
-            />
-          </motion.div>
+          {profilePicture && (
+            <motion.div
+              {...defaultAnimationsResult}
+              transition={{ duration: 1, delay: durationForResult()[0] }}
+              className='mx-auto w-48 h-48 rounded-full overflow-hidden border-8 border-[#EB7AE5] mb-2'
+            >
+              <img
+                src={profilePicture}
+                alt=''
+                className='w-full h-full object-cover'
+              />
+            </motion.div>
+          )}
           <motion.p
             {...defaultAnimationsResult}
             transition={{ duration: 1, delay: durationForResult()[1] }}
-            className='text-white text-lg font-medium text-center'
+            className='text-white text-lg text-center  font-dm-sans font-bold'
           >
             @{username}
           </motion.p>
@@ -54,7 +56,7 @@ const Header = ({
           <motion.h1
             {...defaultAnimationsResult}
             transition={{ duration: 1, delay: durationForResult()[2] }}
-            className='text-5xl text-white font-medium mb-3'
+            className='text-5xl text-white mb-3  font-dm-sans font-bold'
           >
             {name}
           </motion.h1>
@@ -62,7 +64,7 @@ const Header = ({
           <motion.p
             {...defaultAnimationsResult}
             transition={{ duration: 1, delay: durationForResult()[3] }}
-            className={`text-white text-xl lg:text-2xl`}
+            className={`text-white text-xl lg:text-2xl  font-dm-sans font-bold`}
           >
             {biography || 'No Biography'}
           </motion.p>
@@ -77,7 +79,7 @@ const Header = ({
                 key={item.id}
                 {...defaultAnimationsResult}
                 transition={{ duration: 1, delay: durationForResult()[4 + i] }}
-                className='bg-[#3D53F5] text-sm sm:text-base text-white px-5 py-2 rounded-full'
+                className='bg-[#3D53F5] text-sm sm:text-base text-white px-5 py-2 rounded-full font-inter font-normal'
               >
                 {item.name}
               </motion.li>

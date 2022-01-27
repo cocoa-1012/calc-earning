@@ -41,7 +41,7 @@ const Home = () => {
               <div className='flex justify-center items-center'>
                 <img src={img1} alt='' />
               </div>
-              <p className='uppercase text-xl sm:text-2xl font-semibold text-white mt-10'>
+              <p className='uppercase text-xl sm:text-2xl font-bold text-white font-dm-sans  mt-10'>
                 INFLUENCER CALCULATOR
               </p>
             </div>
@@ -51,7 +51,7 @@ const Home = () => {
             <motion.span className='inline-block'>
               <Link
                 to={routes.add}
-                className='mt-16 inline-block md:text-xl btn btn-outline-white'
+                className='mt-16 inline-block md:text-xl btn btn-outline-white font-dm-sans font-bold'
               >
                 Get Started
               </Link>

@@ -17,19 +17,17 @@ const App = () => {
   };
 
   return (
-    <>
-      <AnimatePresence exitBeforeEnter>
-        <Routes location={location} key={location.pathname}>
-          <Route path={routes.home} element={<Home />} />
-          <Route
-            path={routes.add}
-            element={<AddItem setFetchedData={setFetchedData} />}
-          />
-          <Route path={routes.result} element={<Result data={data} />} />
-          <Route path={routes.single} element={<Single />} />
-        </Routes>
-      </AnimatePresence>
-    </>
+    <AnimatePresence exitBeforeEnter>
+      <Routes location={location} key={location.pathname}>
+        <Route path={routes.home} element={<Home />} />
+        <Route
+          path={routes.add}
+          element={<AddItem setFetchedData={setFetchedData} />}
+        />
+        <Route path={routes.result} element={<Result data={data} />} />
+        <Route path={routes.single} element={<Single />} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 
