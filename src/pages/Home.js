@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useInnerHeight } from '../hooks/useInnerHeight';
 import overlay from '../images/bg-overlay.png';
 import bg from '../images/home-bg.png';
 import img1 from '../images/icons/icon-1.png';
@@ -10,14 +11,22 @@ import shape3 from '../images/shapes/shape-03.png';
 import shape4 from '../images/shapes/shape-04.png';
 import shape5 from '../images/shapes/shape-05.png';
 import routes from '../routes';
+import useStyles from '../styles/mainDivStyle';
 
 const Home = () => {
+  const contentHeight = useInnerHeight();
+  const [height , setHeight] = useState(0)
+  
+  useEffect(()=> {
+      setHeight(contentHeight)
+  } , [contentHeight])
+  const classes = useStyles(height);
   return (
     <div
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}
-      className='bg-cover bg-center min-h-screen'
+      className={`bg-cover bg-center md:overflow-hidden ${classes.main}`}
     >
       <motion.div
         className='container mx-auto text-center'
@@ -37,7 +46,7 @@ const Home = () => {
             exit={{ y: '-15vh' }}
             transition={{ duration: 1 }}
           >
-            <div>
+            <div className={classes.imageContainer}>
               <div className='flex justify-center items-center'>
                 <img src={img1} alt='' />
               </div>
