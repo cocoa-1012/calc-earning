@@ -66,9 +66,11 @@ const AddForm = ({ setFetchedData }) => {
         tiktok,
         instagram,
         youtube,
+        name,
+        email,
       }).filter(([key, value]) => !!value);
 
-      if (arrayOfItems.length === 1) {
+      if (arrayOfItems.length === 3) {
         setLoading(false);
         setIsSuccess(false);
         const firstItem = arrayOfItems[0];

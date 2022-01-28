@@ -31,14 +31,14 @@ const Header = ({
   }, [hobbyItems, countAnimationDelay]);
 
   return (
-    <div className='lg:px-20 md:w-10/12 mlb:mx-auto '>
+    <div className='md:w-10/12 mlb:mx-auto '>
       <div className='md:flex gap-5 items-center'>
         <div className='text-center'>
           {profilePicture && (
             <motion.div
               {...defaultAnimationsResult}
               transition={{ duration: 1, delay: durationForResult()[0] }}
-              className='w-52 h-52 from-[#A95865] via-[#EB4E67] to-[#F25DFF] rounded-full flex items-center justify-center profileImageBg'
+              className='mx-auto w-52 h-52 from-[#A95865] via-[#EB4E67] to-[#F25DFF] rounded-full flex items-center justify-center profileImageBg'
             >
               <div className='mx-auto w-48 h-48 rounded-full overflow-hidden border-1'>
                 <img
