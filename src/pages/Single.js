@@ -4,7 +4,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaRegCheckCircle, FaTiktok } from 'react-icons/fa';
 import Modal from 'react-modal';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import SingleCard from '../components/Single/SignleCard';
@@ -20,7 +26,6 @@ import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
 import useStyles from '../styles/mainDivStyle';
-import { abbreviateNumber } from '../utils/number';
 const customStyles = {
   content: {
     top: '50%',
@@ -74,25 +79,32 @@ const Single = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [searchParam] = useSearchParams();
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    abbreviateNumber(910000000000);
     axios.get(`https://shoutsyapi.com/?${name}=${keyword}`).then((res) => {
       setLoading(false);
       const found = res.data.social_medias[name];
-      console.log(found);
+
       if (found.status !== 'success') {
-        navigate(routes.home + "?error='Not found'");
-        return;
+        if (searchParam.get('form')) {
+          navigate(routes.add + '?error=No data found');
+          return;
+        }
+
+        if (pathname !== routes.add) {
+          return navigate(routes.home + `?error=No data found`);
+        }
       }
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 1000);
       setData(found);
       return;
     });
-  }, [name, keyword, navigate]);
+  }, [name, keyword, navigate, searchParam, pathname]);
   const profilePicture = useCallback(() => {
     let value = '';
     if (data?.profile_pic_url) {

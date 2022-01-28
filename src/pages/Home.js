@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useInnerHeight } from '../hooks/useInnerHeight';
 import overlay from '../images/bg-overlay.png';
 import bg from '../images/home-bg.png';
@@ -15,11 +16,23 @@ import useStyles from '../styles/mainDivStyle';
 
 const Home = () => {
   const contentHeight = useInnerHeight();
-  const [height , setHeight] = useState(0)
-  
-  useEffect(()=> {
-      setHeight(contentHeight)
-  } , [contentHeight])
+  const [height, setHeight] = useState(0);
+  const [searchParam] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParam.get('error')) {
+      toast.error(searchParam.get('error'), {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+    }
+  }, [searchParam]);
+  useEffect(() => {
+    setHeight(contentHeight);
+  }, [contentHeight]);
   const classes = useStyles(height);
   return (
     <div
