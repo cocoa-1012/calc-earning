@@ -67,11 +67,17 @@ const AddForm = ({ setFetchedData }) => {
         instagram,
         youtube,
       }).filter(([key, value]) => !!value);
+
       if (arrayOfItems.length === 1) {
         setLoading(false);
         setIsSuccess(false);
         const firstItem = arrayOfItems[0];
-        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}`);
+        setInstagram('');
+        setTiktok('');
+        setYoutube('');
+        setName('');
+        setEmail('');
+        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true`);
         return;
       }
       const queryString = () => {
@@ -89,7 +95,6 @@ const AddForm = ({ setFetchedData }) => {
       axios.get(`https://shoutsyapi.com/?${queryString()}`).then((res) => {
         setLoading(false);
         setFetchedData(res.data);
-        console.log(res.data);
         const array = Object.values({ ...res.data.social_medias }).filter(
           (item) => item.status === 'success'
         );

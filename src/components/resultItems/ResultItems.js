@@ -66,7 +66,7 @@ const ResultItems = (props) => {
     if (array.length === 2) {
       extraClasses = 'justify-between';
     }
-    console.log(array);
+
     return `md:flex gap-14 my-24 flex-wrap lg:flex-nowrap ${extraClasses}`;
   };
 

@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AddForm from '../components/form/AddForm';
 import { useInnerHeight } from '../hooks/useInnerHeight';
 import bg from '../images/add-bg.png';
@@ -14,6 +16,19 @@ import useStyles from '../styles/mainDivStyle';
 const AddItem = ({ setFetchedData }) => {
   const contentHeight = useInnerHeight();
   const [height, setHeight] = useState(0);
+  const [searchParam] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParam.get('error')) {
+      toast.error(searchParam.get('error'), {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+    }
+  }, [searchParam]);
 
   useEffect(() => {
     setHeight(contentHeight);

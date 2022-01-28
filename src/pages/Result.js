@@ -49,7 +49,6 @@ const Result = ({ data }) => {
     return '';
   };
   const headerName = () => {
-    console.log(instagram);
     if (instagram?.full_name) {
       return instagram?.full_name;
     }
