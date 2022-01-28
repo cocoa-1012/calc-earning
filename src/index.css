@@ -66,3 +66,11 @@
    */
   background: linear-gradient(190deg, #eb4e67, #f25dff);
 }
+
+@media (max-width: 360px) {
+  @media (max-height: 640px) {
+    .scale-07 {
+      transform: scale(0.7);
+    }
+  }
+}

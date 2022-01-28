@@ -9,6 +9,7 @@ import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import SingleCard from '../components/Single/SignleCard';
 import Loader from '../components/spinner/Loader';
+import { useInnerHeight } from '../hooks/useInnerHeight';
 import overlay from '../images/bg-overlay-2.png';
 import bg from '../images/result-bg.png';
 import shape1 from '../images/shapes/result/01.png';
@@ -18,6 +19,7 @@ import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
+import useStyles from '../styles/mainDivStyle';
 import { abbreviateNumber } from '../utils/number';
 const customStyles = {
   content: {
@@ -61,6 +63,13 @@ const iconColors = {
 };
 
 const Single = () => {
+  const contentHeight = useInnerHeight();
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setHeight(contentHeight);
+  }, [contentHeight]);
+  const classes = useStyles(height);
   const { name, keyword } = useParams();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -133,7 +142,7 @@ const Single = () => {
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}
-      className='bg-cover bg-no-repeat bg-top min-h-screen pt-24 px-2 xs:px-0 relative'
+      className={`bg-cover bg-center md:overflow-hidden ${classes.main}`}
     >
       <div className='container mx-auto'>
         <div className='lg:absolute lg:top-[50%] lg:left-[50%] w-full px-0 md:px-5 xs:px-10 xl:w-9/12 2xl:w-9/12 3xl:w-7/12 resultPageWrapper'>

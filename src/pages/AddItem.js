@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AddForm from '../components/form/AddForm';
+import { useInnerHeight } from '../hooks/useInnerHeight';
 import bg from '../images/add-bg.png';
 import overlay from '../images/bg-overlay.png';
 import shape1 from '../images/shapes/add/01.png';
@@ -8,14 +9,22 @@ import shape2 from '../images/shapes/add/02.png';
 import shape3 from '../images/shapes/add/03.png';
 import shape4 from '../images/shapes/add/04.png';
 import shape5 from '../images/shapes/add/05.png';
+import useStyles from '../styles/mainDivStyle';
 
 const AddItem = ({ setFetchedData }) => {
+  const contentHeight = useInnerHeight();
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setHeight(contentHeight);
+  }, [contentHeight]);
+  const classes = useStyles(height);
   return (
     <motion.div
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}
-      className='bg-cover bg-no-repeat bg-top min-h-screen'
+      className={`bg-cover bg-center md:overflow-hidden ${classes.main}`}
     >
       <div className='container mx-auto text-center'>
         <div
