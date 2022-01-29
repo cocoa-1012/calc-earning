@@ -94,30 +94,73 @@ const AddForm = ({ setFetchedData }) => {
 
         return string;
       };
-      axios.get(`https://shoutsyapi.com/?${queryString()}`).then((res) => {
-        setLoading(false);
-        setFetchedData(res.data);
-        const array = Object.values({ ...res.data.social_medias }).filter(
-          (item) => item.status === 'success'
-        );
-        if (array.length === 0) {
-          toast.error('No data found!', {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            progress: undefined,
-          });
-          return;
-        }
-        setIsSuccess(true);
-        setTimeout(() => {
-          setIsSuccess(false);
+      axios
+        .get(`https://shoutsyapi.com/?${queryString()}`)
+        .then(async (res) => {
+          setLoading(false);
+          setFetchedData(res.data);
+          const array = Object.values({ ...res.data.social_medias }).filter(
+            (item) => item.status === 'success'
+          );
+          if (array.length === 0) {
+            toast.error('No data found!', {
+              position: 'top-center',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+            });
+            return;
+          }
+
+          const instaData = res.data?.social_medias?.intagram;
+          const tiktokData = res.data?.social_medias?.tiktok;
+          const youtubeData = res.data?.social_medias?.youtubeData;
+          const formData = {
+            _name: name,
+            action: 'submit_nex_form',
+            company_url: '',
+            email,
+            instagram,
+            instagram_engagement: instagram?.engagement_rate
+              ? instaData.engagement_rate
+              : 0,
+            instagram_followers: instagram?.followers ? instaData.followers : 0,
+            ip: '',
+            ms_current_step: '1',
+            nex_forms_Id: '15',
+            nf_page_id: '25',
+            nf_page_title: 'Shoutsy Signup',
+            page: '/signup/calc-signup/',
+            paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
+            tiktok,
+            tiktok_engagement: tiktokData?.engagement_rate
+              ? tiktokData.engagement_rate
+              : 0,
+            tiktok_followers: tiktokData?.followers ? tiktokData.followers : 0,
+            youtube,
+            youtube_engagement: youtubeData?.engagement_rate
+              ? youtubeData.engagement_rate
+              : 0,
+            youtube_subscribers: youtubeData?.followers
+              ? youtubeData.followers
+              : 0,
+          };
+
+          const d = await axios.post(
+            'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
+            formData
+          );
+          console.log(d);
+
+          setIsSuccess(true);
           setTimeout(() => {
-            navigate(routes.result);
+            setIsSuccess(false);
+            setTimeout(() => {
+              navigate(routes.result);
+            }, 1000);
           }, 1000);
-        }, 1000);
-      });
+        });
     } else {
       toast.error('Please Fill all required field', {
         position: 'top-center',
