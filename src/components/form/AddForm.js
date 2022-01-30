@@ -116,7 +116,7 @@ const AddForm = ({ setFetchedData }) => {
           const instaData = res.data?.social_medias?.intagram;
           const tiktokData = res.data?.social_medias?.tiktok;
           const youtubeData = res.data?.social_medias?.youtubeData;
-          const formData = {
+          const requestDta = {
             _name: name,
             action: 'submit_nex_form',
             company_url: '',
@@ -147,11 +147,19 @@ const AddForm = ({ setFetchedData }) => {
               : 0,
           };
 
-          const d = await axios.post(
+          const formData = new FormData();
+
+          Object.entries(requestDta).forEach(([name, value]) => {
+            formData.append(name, value);
+          });
+
+          await axios.post(
             'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
-            formData
+            formData,
+            {
+              headers: { 'Content-Type': 'multipart/form-data' },
+            }
           );
-          console.log(d);
 
           setIsSuccess(true);
           setTimeout(() => {
