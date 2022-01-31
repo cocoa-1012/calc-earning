@@ -85,25 +85,83 @@ const Single = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    axios.get(`https://shoutsyapi.com/?${name}=${keyword}`).then((res) => {
-      setLoading(false);
-      const found = res.data.social_medias[name];
+    axios
+      .get(`https://shoutsyapi.com/?${name}=${keyword}`)
+      .then(async (res) => {
+        setLoading(false);
+        const found = res.data.social_medias[name];
 
-      if (found.status !== 'success') {
-        if (searchParam.get('form')) {
-          navigate(routes.add + '?error=No data found');
-          return;
+        if (found.status !== 'success') {
+          if (searchParam.get('form')) {
+            navigate(routes.add + '?error=No data found');
+            return;
+          }
+
+          if (pathname !== routes.add) {
+            return navigate(routes.home + `?error=No data found`);
+          }
         }
 
-        if (pathname !== routes.add) {
-          return navigate(routes.home + `?error=No data found`);
+        const username = found.username;
+        const engagementRate = found.engagement_rate;
+        const followers = found.followers;
+
+        const formData = new FormData();
+        const requestData = {
+          _name: searchParam.get('name') || '',
+          action: 'submit_nex_form',
+          company_url: '',
+          email: searchParam.get('email') || '',
+          instagram: null,
+          instagram_engagement: 0,
+          instagram_followers: 0,
+          ip: '',
+          ms_current_step: '1',
+          nex_forms_Id: '15',
+          nf_page_id: '25',
+          nf_page_title: 'Shoutsy Signup',
+          page: '/signup/calc-signup/',
+          paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
+          tiktok: null,
+          tiktok_engagement: null,
+          tiktok_followers: null,
+          youtube: null,
+          youtube_engagement: null,
+          youtube_subscribers: null,
+        };
+
+        if (name === 'instagram') {
+          requestData.instagram = username;
+          requestData.instagram_engagement = engagementRate;
+          requestData.instagram_followers = followers;
         }
-      }
-      setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 1000);
-      setData(found);
-      return;
-    });
+        if (name === 'tiktok') {
+          requestData.tiktok = username;
+          requestData.tiktok_engagement = engagementRate;
+          requestData.tiktok_followers = followers;
+        }
+        if (name === 'youtube') {
+          requestData.youtube = username;
+          requestData.youtube_engagement = engagementRate;
+          requestData.youtube_subscribers = followers;
+        }
+
+        Object.entries(requestData).forEach(([name, value]) => {
+          formData.append(name, value);
+        });
+
+        await axios.post(
+          'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        );
+        setIsSuccess(true);
+        setTimeout(() => setIsSuccess(false), 1000);
+        setData(found);
+        return;
+      });
   }, [name, keyword, navigate, searchParam, pathname]);
   const profilePicture = useCallback(() => {
     let value = '';
