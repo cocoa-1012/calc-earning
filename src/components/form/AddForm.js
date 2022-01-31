@@ -83,9 +83,9 @@ const AddForm = ({ setFetchedData }) => {
         setEmail('');
         console.log({ firstItem });
         navigate(
-          `/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true&type=${
-            firstItem[0]
-          }`
+          `/${firstItem[0]}/${removeAtRate(
+            firstItem[1]
+          )}?form=true&name=${name}&email=${email}`
         );
         return;
       }
