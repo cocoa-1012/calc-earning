@@ -73,27 +73,36 @@ const AddForm = ({ setFetchedData }) => {
       if (arrayOfItems.length === 3) {
         setLoading(false);
         setIsSuccess(false);
-        const firstItem = arrayOfItems[0];
+        const firstItem = arrayOfItems.filter(([key]) => {
+          return key !== 'name' && key !== 'email';
+        })[0];
         setInstagram('');
         setTiktok('');
         setYoutube('');
         setName('');
         setEmail('');
-        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true`);
+        console.log({ firstItem });
+        navigate(
+          `/${firstItem[0]}/${removeAtRate(
+            firstItem[1]
+          )}?form=true&name=${name}&email=${email}`
+        );
         return;
       }
       const queryString = () => {
         const arrayData = { tiktok, instagram, youtube };
 
         const string = Object.entries(arrayData)
+          .filter(([_, value]) => !!value)
           .map(([name, value]) => {
             const filterValue = removeAtRate(value);
-            return `${name}=${filterValue.split(' ').join('-')}`;
+            return `${name}=${filterValue}`;
           })
           .join('&');
 
         return string;
       };
+
       axios
         .get(`https://shoutsyapi.com/?${queryString()}`)
         .then(async (res) => {
