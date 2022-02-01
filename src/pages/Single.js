@@ -105,58 +105,59 @@ const Single = () => {
         const username = found.username;
         const engagementRate = found.engagement_rate;
         const followers = found.followers;
+        if (searchParam.get('form')) {
+          const formData = new FormData();
+          const requestData = {
+            _name: searchParam.get('name') || '',
+            action: 'submit_nex_form',
+            company_url: '',
+            email: searchParam.get('email') || '',
+            instagram: null,
+            instagram_engagement: 0,
+            instagram_followers: 0,
+            ip: '',
+            ms_current_step: '1',
+            nex_forms_Id: '15',
+            nf_page_id: '25',
+            nf_page_title: 'Shoutsy Signup',
+            page: '/signup/calc-signup/',
+            paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
+            tiktok: null,
+            tiktok_engagement: null,
+            tiktok_followers: null,
+            youtube: null,
+            youtube_engagement: null,
+            youtube_subscribers: null,
+          };
 
-        const formData = new FormData();
-        const requestData = {
-          _name: searchParam.get('name') || '',
-          action: 'submit_nex_form',
-          company_url: '',
-          email: searchParam.get('email') || '',
-          instagram: null,
-          instagram_engagement: 0,
-          instagram_followers: 0,
-          ip: '',
-          ms_current_step: '1',
-          nex_forms_Id: '15',
-          nf_page_id: '25',
-          nf_page_title: 'Shoutsy Signup',
-          page: '/signup/calc-signup/',
-          paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
-          tiktok: null,
-          tiktok_engagement: null,
-          tiktok_followers: null,
-          youtube: null,
-          youtube_engagement: null,
-          youtube_subscribers: null,
-        };
-
-        if (name === 'instagram') {
-          requestData.instagram = username;
-          requestData.instagram_engagement = engagementRate;
-          requestData.instagram_followers = followers;
-        }
-        if (name === 'tiktok') {
-          requestData.tiktok = username;
-          requestData.tiktok_engagement = engagementRate;
-          requestData.tiktok_followers = followers;
-        }
-        if (name === 'youtube') {
-          requestData.youtube = username;
-          requestData.youtube_engagement = engagementRate;
-          requestData.youtube_subscribers = followers;
-        }
-
-        Object.entries(requestData).forEach(([name, value]) => {
-          formData.append(name, value);
-        });
-
-        await axios.post(
-          'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
-          formData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
+          if (name === 'instagram') {
+            requestData.instagram = username;
+            requestData.instagram_engagement = engagementRate;
+            requestData.instagram_followers = followers;
           }
-        );
+          if (name === 'tiktok') {
+            requestData.tiktok = username;
+            requestData.tiktok_engagement = engagementRate;
+            requestData.tiktok_followers = followers;
+          }
+          if (name === 'youtube') {
+            requestData.youtube = username;
+            requestData.youtube_engagement = engagementRate;
+            requestData.youtube_subscribers = followers;
+          }
+
+          Object.entries(requestData).forEach(([name, value]) => {
+            formData.append(name, value);
+          });
+
+          await axios.post(
+            'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
+            formData,
+            {
+              headers: { 'Content-Type': 'multipart/form-data' },
+            }
+          );
+        }
         setIsSuccess(true);
         setTimeout(() => setIsSuccess(false), 1000);
         setData(found);
