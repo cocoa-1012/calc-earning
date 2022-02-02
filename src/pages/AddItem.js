@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AddForm from '../components/form/AddForm';
-import { useInnerHeight } from '../hooks/useInnerHeight';
+import { useInnerSize } from '../hooks/useInnerSize';
 import bg from '../images/add-bg.png';
 import overlay from '../images/bg-overlay.png';
 import shape1 from '../images/shapes/add/01.png';
@@ -14,7 +14,7 @@ import shape5 from '../images/shapes/add/05.png';
 import useStyles from '../styles/mainDivStyle';
 
 const AddItem = ({ setFetchedData }) => {
-  const contentHeight = useInnerHeight();
+  const { height: contentHeight } = useInnerSize();
   const [height, setHeight] = useState(0);
   const [searchParam] = useSearchParams();
 

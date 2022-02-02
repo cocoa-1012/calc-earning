@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { createUseStyles } from 'react-jss';
 import { Navigate } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import ResultItems from '../components/resultItems/ResultItems';
-import { useInnerHeight } from '../hooks/useInnerHeight';
+import { useInnerSize } from '../hooks/useInnerSize';
 import overlay from '../images/bg-overlay-2.png';
 import bg from '../images/result-bg.png';
 import shape1 from '../images/shapes/result/01.png';
@@ -14,16 +15,49 @@ import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
-import useStyles from '../styles/mainDivStyle';
+
+const useStyles = createUseStyles({
+  main: (size) => {
+    const heightData = (width, height) => {
+      if (height < 768 && width > 768) {
+        console.log('first', size);
+        return height + 400;
+      }
+      if (width < 768) {
+        if (height > 900) {
+          console.log('second', size);
+          return height + 100;
+        }
+        if (height > 768) {
+          console.log('second', size);
+          return height + 300;
+        }
+        if (height > 600) {
+          console.log('second', size);
+          return height + 500;
+        }
+        return height + 600;
+      }
+      console.log('last', size);
+      return height;
+    };
+    return {
+      height: heightData(size.width, size.height),
+      overflow: 'hidden',
+      paddingTop: 100,
+      position: 'relative',
+    };
+  },
+});
 
 const Result = ({ data }) => {
-  const contentHeight = useInnerHeight();
-  const [height, setHeight] = useState(0);
+  const windowSize = useInnerSize();
+  const [size, setSize] = useState(0);
 
   useEffect(() => {
-    setHeight(contentHeight);
-  }, [contentHeight]);
-  const classes = useStyles(height);
+    setSize(windowSize);
+  }, [windowSize]);
+  const classes = useStyles(size);
   const [count, setCount] = useState(4);
   if (Object.keys(data).length === 0) {
     return <Navigate to={routes.add} />;
