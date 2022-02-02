@@ -81,7 +81,7 @@ const AddForm = ({ setFetchedData }) => {
         setYoutube('');
         setName('');
         setEmail('');
-        console.log({ firstItem });
+
         navigate(
           `/${firstItem[0]}/${removeAtRate(
             firstItem[1]
