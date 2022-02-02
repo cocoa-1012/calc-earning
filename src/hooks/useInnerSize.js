@@ -1,14 +1,15 @@
 import { useLayoutEffect, useState } from 'react';
 
-export function useInnerHeight() {
+export function useInnerSize() {
   const [size, setSize] = useState(0);
   useLayoutEffect(() => {
     function updateSize() {
-      setSize(window.innerHeight);
+      setSize({ height: window.innerHeight, width: window.innerWidth });
     }
     window.addEventListener('resize', updateSize);
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
   }, []);
+  console.log(size);
   return size;
 }

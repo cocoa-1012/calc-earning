@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useInnerHeight } from '../hooks/useInnerHeight';
+import { useInnerSize } from '../hooks/useInnerSize';
 import overlay from '../images/bg-overlay.png';
 import bg from '../images/home-bg.png';
 import img1 from '../images/icons/icon-1.png';
@@ -15,7 +15,7 @@ import routes from '../routes';
 import useStyles from '../styles/mainDivStyle';
 
 const Home = () => {
-  const contentHeight = useInnerHeight();
+  const { height: contentHeight } = useInnerSize();
   const [height, setHeight] = useState(0);
   const [searchParam] = useSearchParams();
 
