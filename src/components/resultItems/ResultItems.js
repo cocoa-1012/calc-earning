@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
 import shortid from 'shortid';
+import ClaimedProfileForm from '../form/ClaimedProfileForm';
 import Item from './Item';
-
-
 
 const ResultItems = (props) => {
   const { instagram, tiktok, youtube, count, setCount } = props;
@@ -118,6 +117,7 @@ const ResultItems = (props) => {
           />
         )}
       </div>
+      <ClaimedProfileForm />
     </div>
   );
 };

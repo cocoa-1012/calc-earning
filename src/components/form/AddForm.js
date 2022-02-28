@@ -30,8 +30,6 @@ const customStyles = {
 };
 
 const AddForm = ({ setFetchedData }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [instagram, setInstagram] = useState('');
   const [tiktok, setTiktok] = useState('');
   const [youtube, setYoutube] = useState('');
@@ -44,7 +42,7 @@ const AddForm = ({ setFetchedData }) => {
 
   useEffect(() => {
     if (showError) {
-      const data = { name, email, instagram, tiktok, youtube };
+      const data = { instagram, tiktok, youtube };
 
       const { hasError, errors: e } = addFormValidation(data);
       if (hasError) {
@@ -53,25 +51,25 @@ const AddForm = ({ setFetchedData }) => {
         setError({});
       }
     }
-  }, [name, email, instagram, tiktok, youtube, showError]);
+  }, [instagram, tiktok, youtube, showError]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const data = { name, email, instagram, tiktok, youtube };
+    const data = { instagram, tiktok, youtube };
     const { hasError } = addFormValidation(data);
     setShowError(hasError);
     if (!hasError) {
-      window.gtag('event', 'conversion', {'send_to': 'AW-305656401/yheZCITvuJkDENHk35EB'});  
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-305656401/yheZCITvuJkDENHk35EB',
+      });
       setLoading(true);
       const arrayOfItems = Object.entries({
         tiktok,
         instagram,
         youtube,
-        name,
-        email,
       }).filter(([key, value]) => !!value);
 
-      if (arrayOfItems.length === 3) {   
+      if (arrayOfItems.length === 1) {
         setLoading(false);
         setIsSuccess(false);
         const firstItem = arrayOfItems.filter(([key]) => {
@@ -80,28 +78,17 @@ const AddForm = ({ setFetchedData }) => {
         setInstagram('');
         setTiktok('');
         setYoutube('');
-        setName('');
-        setEmail('');
-        console.log({ firstItem });  
-        navigate(
-          `/${firstItem[0]}/${removeAtRate(
-            firstItem[1]
-          )}?form=true&name=${name}&email=${email}`
-        );
+
+        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true`);
         return;
       }
       const queryString = () => {
-        const arrayData = { tiktok, instagram, youtube };
-
-        const string = Object.entries(arrayData)
-          .filter(([_, value]) => !!value)
+        return arrayOfItems
           .map(([name, value]) => {
             const filterValue = removeAtRate(value);
             return `${name}=${filterValue}`;
           })
           .join('&');
-
-        return string;
       };
 
       axios
@@ -125,13 +112,11 @@ const AddForm = ({ setFetchedData }) => {
 
           const instaData = res.data?.social_medias?.intagram;
           const tiktokData = res.data?.social_medias?.tiktok;
-          const youtubeData = res.data?.social_medias?.youtubeData;          
-                    
+          const youtubeData = res.data?.social_medias?.youtubeData;
+
           const requestDta = {
-            _name: name,
             action: 'submit_nex_form',
             company_url: '',
-            email,
             instagram,
             instagram_engagement: instagram?.engagement_rate
               ? instaData.engagement_rate
@@ -175,7 +160,7 @@ const AddForm = ({ setFetchedData }) => {
           setIsSuccess(true);
           setTimeout(() => {
             setIsSuccess(false);
-            setTimeout(() => {                
+            setTimeout(() => {
               navigate(routes.result);
             }, 1000);
           }, 1000);
@@ -196,46 +181,6 @@ const AddForm = ({ setFetchedData }) => {
       <AnimatePresence exitBeforeEnter>
         <div className='mt-4 sm:mt-20'>
           <form onSubmit={submitHandler}>
-            <div className='form-group'>
-              <div className='inputWrapper relative overflow-hidden'>
-                <input
-                  type='text'
-                  placeholder='Name'
-                  className='input-box'
-                  value={name}
-                  onChange={(e) => {
-                    if (!e.target.value) {
-                      setShowError(true);
-                    }
-                    setName(e.target.value);
-                  }}
-                />
-                {errors.name && (
-                  <p className='text-left mt-3 text-[#FF2020] font-dm-sans font-medium '>
-                    {errors.name}
-                  </p>
-                )}
-              </div>
-              <div className='inputWrapper'>
-                <input
-                  type='email'
-                  placeholder='Email'
-                  className='input-box'
-                  value={email}
-                  onChange={(e) => {
-                    if (!e.target.value) {
-                      setShowError(true);
-                    }
-                    setEmail(e.target.value);
-                  }}
-                />
-                {errors.email && (
-                  <p className='text-left mt-3 text-[#FF2020] font-dm-sans font-medium '>
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-            </div>
             <div className='form-group'>
               <div className=' inputWrapper'>
                 <input

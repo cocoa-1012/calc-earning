@@ -7,6 +7,11 @@
   inline-block px-9 text-white rounded-md hover:bg-white hover:text-black 
   font-dm-sans font-bold;
 }
+.btn-outline-claim {
+  @apply bg-transparent border border-gray-200 py-3 mt-0
+  inline-block px-9 text-white rounded-md hover:bg-white hover:text-black 
+  font-dm-sans font-bold;
+}
 .btn-outline-white {
   @apply bg-transparent border border-gray-200 py-3 px-5 text-white rounded-md hover:bg-white hover:text-black;
 }

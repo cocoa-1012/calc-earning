@@ -10,6 +10,6 @@ export function useInnerSize() {
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
   }, []);
-  console.log(size);
+
   return size;
 }

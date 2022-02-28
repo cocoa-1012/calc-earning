@@ -24,10 +24,22 @@ const Footer = ({ count, isSingle = false }) => {
         <p className='sm:text-3xl font-dm-sans font-bold '>
           Start earning with{' '}
         </p>
-        <div>
+        <a
+          href='https://www.shoutsy.app'
+          rel='noreferrer'
+          target='_blank'
+          className='block'
+        >
           <img src={icon} alt='' />
-        </div>
-        <p className='sm:text-4xl font-popins  font-bold'>Shoutsy</p>
+        </a>
+        <a
+          href='https://www.shoutsy.app'
+          rel='noreferrer'
+          target='_blank'
+          className='sm:text-4xl font-popins block font-bold'
+        >
+          Shoutsy
+        </a>
       </motion.div>
     </div>
   );
