@@ -16,29 +16,39 @@ import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
 
+
+
+
 const useStyles = createUseStyles({
-  main: ({ size, itemCount }) => {
+  main: (size) => {
     const heightData = (width, height) => {
       if (height < 768 && width > 768) {
+        console.log('first', size);
         return height + 400;
       }
-      const eachHeight = 280 * itemCount;
       if (width < 768) {
         if (height > 900) {
-          return height + 100 + eachHeight;
+          console.log('second', size);
+          return height + 950;
         }
         if (height > 768) {
-          return height + 300 + eachHeight;
+          console.log('second', size);
+          return height + 1050;
         }
         if (height > 600) {
-          return height + 500 + eachHeight;
+          console.log('second', size);
+          return height + 1250;
         }
-        return height + 600 + eachHeight;
+        return height + 1500;
       }
+      if (768 <= width && width <= 830) {
+        return height + 500;
+      }
+      console.log('last', size);
       return height;
     };
     return {
-      height: heightData(size.width, size.height, itemCount),
+      height: heightData(size.width, size.height),
       overflow: 'hidden',
       paddingTop: 100,
       position: 'relative',
@@ -53,9 +63,8 @@ const Result = ({ data }) => {
   useEffect(() => {
     setSize(windowSize);
   }, [windowSize]);
+  const classes = useStyles(size);
   const [count, setCount] = useState(4);
-  const [itemCount, setItemCount] = useState(1);
-  const classes = useStyles({ size, itemCount });
   if (Object.keys(data).length === 0) {
     return <Navigate to={routes.add} />;
   }
@@ -63,26 +72,6 @@ const Result = ({ data }) => {
   const {
     social_medias: { instagram, tiktok, youtube },
   } = data;
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    if (!data) return;
-    if (!data.social_medias) return;
-    let length = 0;
-    if (instagram?.status === 'success') {
-      length += 1;
-    }
-
-    if (tiktok?.status === 'success') {
-      length += 1;
-    }
-
-    if (youtube?.status === 'success') {
-      length += 1;
-    }
-
-    setItemCount(length);
-  }, [instagram, tiktok, youtube, data]);
 
   const profilePicture = () => {
     if (instagram?.profile_pic_url) {
@@ -136,8 +125,9 @@ const Result = ({ data }) => {
     return '';
   };
 
-  return (
+  return (     
     <div
+    
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}

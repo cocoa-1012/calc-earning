@@ -12,7 +12,7 @@ const Footer = ({ count, isSingle = false }) => {
           transition={{ duration: 1, delay: durationForResult()[count + 1] }}
           className='sm:text-4xl font-dm-sans  font-bold text-white text-center mb-6 mt-4'
         >
-          Claim you profile
+          Claim your profile
         </motion.h3>
       )}
 

@@ -61,6 +61,7 @@ const AddForm = ({ setFetchedData }) => {
     const { hasError } = addFormValidation(data);
     setShowError(hasError);
     if (!hasError) {
+      window.gtag('event', 'conversion', {'send_to': 'AW-305656401/yheZCITvuJkDENHk35EB'});  
       setLoading(true);
       const arrayOfItems = Object.entries({
         tiktok,
@@ -70,7 +71,7 @@ const AddForm = ({ setFetchedData }) => {
         email,
       }).filter(([key, value]) => !!value);
 
-      if (arrayOfItems.length === 3) {
+      if (arrayOfItems.length === 3) {   
         setLoading(false);
         setIsSuccess(false);
         const firstItem = arrayOfItems.filter(([key]) => {
@@ -81,7 +82,7 @@ const AddForm = ({ setFetchedData }) => {
         setYoutube('');
         setName('');
         setEmail('');
-
+        console.log({ firstItem });  
         navigate(
           `/${firstItem[0]}/${removeAtRate(
             firstItem[1]
@@ -124,7 +125,8 @@ const AddForm = ({ setFetchedData }) => {
 
           const instaData = res.data?.social_medias?.intagram;
           const tiktokData = res.data?.social_medias?.tiktok;
-          const youtubeData = res.data?.social_medias?.youtubeData;
+          const youtubeData = res.data?.social_medias?.youtubeData;          
+                    
           const requestDta = {
             _name: name,
             action: 'submit_nex_form',
@@ -173,7 +175,7 @@ const AddForm = ({ setFetchedData }) => {
           setIsSuccess(true);
           setTimeout(() => {
             setIsSuccess(false);
-            setTimeout(() => {
+            setTimeout(() => {                
               navigate(routes.result);
             }, 1000);
           }, 1000);

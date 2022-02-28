@@ -1,5 +1,6 @@
 {
   "name": "calc-earning",
+  "homepage": "http://www.influencerscalculator.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,6 +12,7 @@
     "react": "^17.0.2",
     "react-alert-template-mui": "^1.0.7",
     "react-dom": "^17.0.2",
+    "react-gtm-module": "^2.0.11",
     "react-icons": "^4.3.1",
     "react-jss": "^10.9.0",
     "react-modal": "^3.14.4",
