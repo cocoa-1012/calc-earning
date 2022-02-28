@@ -16,27 +16,20 @@ import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
 
-
-
-
 const useStyles = createUseStyles({
   main: (size) => {
     const heightData = (width, height) => {
       if (height < 768 && width > 768) {
-        console.log('first', size);
         return height + 400;
       }
       if (width < 768) {
         if (height > 900) {
-          console.log('second', size);
           return height + 950;
         }
         if (height > 768) {
-          console.log('second', size);
           return height + 1050;
         }
         if (height > 600) {
-          console.log('second', size);
           return height + 1250;
         }
         return height + 1500;
@@ -44,11 +37,11 @@ const useStyles = createUseStyles({
       if (768 <= width && width <= 830) {
         return height + 500;
       }
-      console.log('last', size);
+
       return height;
     };
     return {
-      height: heightData(size.width, size.height),
+      height: heightData(size.width, size.height) + 250,
       overflow: 'hidden',
       paddingTop: 100,
       position: 'relative',
@@ -125,9 +118,8 @@ const Result = ({ data }) => {
     return '';
   };
 
-  return (     
+  return (
     <div
-    
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}

@@ -12,6 +12,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import ClaimedProfileForm from '../components/form/ClaimedProfileForm';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
 import SingleCard from '../components/Single/SignleCard';
@@ -90,11 +91,11 @@ const useStyles = createUseStyles({
         }
         return height + 600;
       }
-      console.log('last', size);
+
       return height;
     };
     return {
-      height: heightData(size.width, size.height),
+      height: heightData(size.width, size.height) + 250,
       overflow: 'hidden',
       paddingTop: 100,
       position: 'relative',
@@ -271,6 +272,10 @@ const Single = () => {
                   from={data?.earnings_low}
                   to={data?.earnings_high}
                   start={elementOffSetCount[name]}
+                />
+                <ClaimedProfileForm
+                  setLoading={setLoading}
+                  setIsSuccess={setIsSuccess}
                 />
               </>
             )}
