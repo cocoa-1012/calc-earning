@@ -8,6 +8,7 @@ import Result from './pages/Result';
 import Single from './pages/Single';
 import routes from './routes';
 
+
 const App = () => {
   const location = useLocation();
   const [data, setData] = useState({});
@@ -19,7 +20,7 @@ const App = () => {
   return (
     <AnimatePresence exitBeforeEnter>
       <Routes location={location} key={location.pathname}>
-        <Route path={routes.home} element={<Home />} />
+        <Route path={routes.home} element={<Home />}  />
         <Route
           path={routes.add}
           element={<AddItem setFetchedData={setFetchedData} />}
