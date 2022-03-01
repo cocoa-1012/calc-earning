@@ -1,14 +1,13 @@
-import axios from 'axios';
 import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import routes from '../../routes';
+import { fetchSocialData } from '../../store/mainActions';
 import { addFormValidation } from '../../utils/formValidation';
-import { removeAtRate } from '../../utils/string';
 import Loader from '../spinner/Loader';
 
 const customStyles = {
@@ -29,7 +28,7 @@ const customStyles = {
   },
 };
 
-const AddForm = ({ setFetchedData }) => {
+const AddForm = () => {
   const [instagram, setInstagram] = useState('');
   const [tiktok, setTiktok] = useState('');
   const [youtube, setYoutube] = useState('');
@@ -37,7 +36,7 @@ const AddForm = ({ setFetchedData }) => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,109 +61,24 @@ const AddForm = ({ setFetchedData }) => {
       window.gtag('event', 'conversion', {
         send_to: 'AW-305656401/yheZCITvuJkDENHk35EB',
       });
-      setLoading(true);
-      const arrayOfItems = Object.entries({
-        tiktok,
-        instagram,
-        youtube,
-      }).filter(([key, value]) => !!value);
-
-      if (arrayOfItems.length === 1) {
-        setLoading(false);
-        setIsSuccess(false);
-        const firstItem = arrayOfItems.filter(([key]) => {
-          return key !== 'name' && key !== 'email';
-        })[0];
-        setInstagram('');
-        setTiktok('');
-        setYoutube('');
-
-        navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true`);
-        return;
-      }
-      const queryString = () => {
-        return arrayOfItems
-          .map(([name, value]) => {
-            const filterValue = removeAtRate(value);
-            return `${name}=${filterValue}`;
-          })
-          .join('&');
-      };
-
-      axios
-        .get(`https://shoutsyapi.com/?${queryString()}`)
-        .then(async (res) => {
-          setLoading(false);
-          setFetchedData(res.data);
-          const array = Object.values({ ...res.data.social_medias }).filter(
-            (item) => item.status === 'success'
-          );
-          if (array.length === 0) {
-            toast.error('No data found!', {
-              position: 'top-center',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-            });
-            return;
-          }
-
-          const instaData = res.data?.social_medias?.intagram;
-          const tiktokData = res.data?.social_medias?.tiktok;
-          const youtubeData = res.data?.social_medias?.youtubeData;
-
-          const requestDta = {
-            action: 'submit_nex_form',
-            company_url: '',
-            instagram,
-            instagram_engagement: instagram?.engagement_rate
-              ? instaData.engagement_rate
-              : 0,
-            instagram_followers: instagram?.followers ? instaData.followers : 0,
-            ip: '',
-            ms_current_step: '1',
-            nex_forms_Id: '15',
-            nf_page_id: '25',
-            nf_page_title: 'Shoutsy Signup',
-            page: '/signup/calc-signup/',
-            paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
-            tiktok,
-            tiktok_engagement: tiktokData?.engagement_rate
-              ? tiktokData.engagement_rate
-              : 0,
-            tiktok_followers: tiktokData?.followers ? tiktokData.followers : 0,
-            youtube,
-            youtube_engagement: youtubeData?.engagement_rate
-              ? youtubeData.engagement_rate
-              : 0,
-            youtube_subscribers: youtubeData?.followers
-              ? youtubeData.followers
-              : 0,
-          };
-
-          const formData = new FormData();
-
-          Object.entries(requestDta).forEach(([name, value]) => {
-            formData.append(name, value);
-          });
-
-          await axios.post(
-            'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
-            formData,
-            {
-              headers: { 'Content-Type': 'multipart/form-data' },
+      //   dispatch action
+      dispatch(
+        fetchSocialData(
+          { tiktok, youtube, instagram },
+          {
+            setIsSuccess,
+            setLoading,
+            navigate,
+          },
+          (result) => {
+            if (result) {
+              setInstagram('');
+              setTiktok('');
+              setYoutube('');
             }
-          );
-
-          setIsSuccess(true);
-          setTimeout(() => {
-            setIsSuccess(false);
-            setTimeout(() => {
-              navigate(routes.result);
-            }, 1000);
-          }, 1000);
-        });
+          }
+        )
+      );
     } else {
       toast.error('Please Fill all required field', {
         position: 'top-center',

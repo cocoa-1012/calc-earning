@@ -1,16 +1,15 @@
-import axios from 'axios';
 import { motion } from 'framer-motion';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaRegCheckCircle, FaTiktok } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Navigate,
   useLocation,
   useNavigate,
   useParams,
-  useSearchParams,
 } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
@@ -26,218 +25,40 @@ import shape4 from '../images/shapes/result/04.png';
 import shape5 from '../images/shapes/result/05.png';
 import shape6 from '../images/shapes/result/06.png';
 import routes from '../routes';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '100%',
-    height: '100vh',
-    background: 'transparent',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 300000,
-  },
-};
-const allowedName = ['instagram', 'tiktok', 'youtube'];
-const footerAnimationDelay = {
-  instagram: 29,
-  tiktok: 23,
-  youtube: 27,
-};
-
-const elementOffSetCount = {
-  instagram: 9,
-  tiktok: 3,
-  youtube: 2,
-};
-
-const icons = {
-  instagram: FaInstagram,
-  tiktok: FaTiktok,
-  youtube: AiOutlineYoutube,
-};
-const iconColors = {
-  instagram: '#DF4482',
-  tiktok: '#000',
-  youtube: '#DF4482',
-};
-
-const useStyles = createUseStyles({
-  main: (size) => {
-    const heightData = (width, height) => {
-      if (height < 768 && width > 768) {
-        console.log('first', size);
-        return height + 400;
-      }
-      if (width < 768) {
-        if (height > 900) {
-          console.log('second', size);
-          return height + 100;
-        }
-        if (height > 768) {
-          console.log('second', size);
-          return height + 300;
-        }
-        if (height > 600) {
-          console.log('second', size);
-          return height + 500;
-        }
-        return height + 600;
-      }
-
-      return height;
-    };
-    return {
-      height: heightData(size.width, size.height) + 250,
-      overflow: 'hidden',
-      paddingTop: 100,
-      position: 'relative',
-    };
-  },
-});
+import { fetchSingleSocialData } from '../store/mainActions';
 
 const Single = () => {
   const windowSize = useInnerSize();
   const [size, setSize] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSize(windowSize);
   }, [windowSize]);
   const classes = useStyles(size);
   const { name, keyword } = useParams();
-  const [data, setData] = useState({});
+  const data = useSelector((state) => {
+    if (Object.keys(state.data).length !== 0) {
+      return state.data[name];
+    }
+    return {};
+  });
   const [loading, setLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [searchParam] = useSearchParams();
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
-    axios
-      .get(`https://shoutsyapi.com/?${name}=${keyword}`)
-      .then(async (res) => {
-        setLoading(false);
-        const found = res.data.social_medias[name];
-
-        if (found.status !== 'success') {
-          if (searchParam.get('form')) {
-            navigate(routes.add + '?error=No data found');
-            return;
-          }
-
-          if (pathname !== routes.add) {
-            return navigate(routes.home + `?error=No data found`);
-          }
-        }
-
-        const username = found.username;
-        const engagementRate = found.engagement_rate;
-        const followers = found.followers;
-        if (searchParam.get('form')) {
-          const formData = new FormData();
-          const requestData = {
-            _name: searchParam.get('name') || '',
-            action: 'submit_nex_form',
-            company_url: '',
-            email: searchParam.get('email') || '',
-            instagram: null,
-            instagram_engagement: 0,
-            instagram_followers: 0,
-            ip: '',
-            ms_current_step: '1',
-            nex_forms_Id: '15',
-            nf_page_id: '25',
-            nf_page_title: 'Shoutsy Signup',
-            page: '/signup/calc-signup/',
-            paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
-            tiktok: null,
-            tiktok_engagement: null,
-            tiktok_followers: null,
-            youtube: null,
-            youtube_engagement: null,
-            youtube_subscribers: null,
-          };
-
-          if (name === 'instagram') {
-            requestData.instagram = username;
-            requestData.instagram_engagement = engagementRate;
-            requestData.instagram_followers = followers;
-          }
-          if (name === 'tiktok') {
-            requestData.tiktok = username;
-            requestData.tiktok_engagement = engagementRate;
-            requestData.tiktok_followers = followers;
-          }
-          if (name === 'youtube') {
-            requestData.youtube = username;
-            requestData.youtube_engagement = engagementRate;
-            requestData.youtube_subscribers = followers;
-          }
-
-          Object.entries(requestData).forEach(([name, value]) => {
-            formData.append(name, value);
-          });
-
-          await axios.post(
-            'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
-            formData,
-            {
-              headers: { 'Content-Type': 'multipart/form-data' },
-            }
-          );
-        }
-        setIsSuccess(true);
-        setTimeout(() => setIsSuccess(false), 1000);
-        setData(found);
-        return;
-      });
-  }, [name, keyword, navigate, searchParam, pathname]);
-  const profilePicture = useCallback(() => {
-    let value = '';
-    if (data?.profile_pic_url) {
-      value = data?.profile_pic_url;
-    }
-    if (data?.avatar_url) {
-      value = data?.avatar_url;
-    }
-
-    return value;
-  }, [data]);
-  const headerName = useCallback(() => {
-    let value = '';
-    if (data?.full_name) {
-      value = data?.full_name;
-    }
-    if (data?.username) {
-      value = data?.username;
-    }
-
-    return value;
-  }, [data]);
-  const headerUsername = useCallback(() => {
-    if (data?.username) {
-      return data?.username;
-    }
-
-    return '';
-  }, [data]);
-  const biography = useCallback(() => {
-    if (data?.biography) {
-      return data?.biography;
-    }
-    if (data?.about) {
-      return data?.about;
-    }
-
-    return '';
-  }, [data]);
+    const values = { name, keyword };
+    const propeties = {
+      setLoading,
+      navigate,
+      setIsSuccess,
+      pathname,
+    };
+    dispatch(fetchSingleSocialData(values, propeties));
+  }, [name, keyword, navigate, pathname, dispatch]);
 
   if (!allowedName.includes(name.toLocaleLowerCase())) {
     return <Navigate to={routes.home + "?error='Invalid name'"} />;
@@ -256,11 +77,6 @@ const Single = () => {
             {Object.keys(data).length > 0 && !loading && !isSuccess && (
               <>
                 <Header
-                  profilePicture={profilePicture()}
-                  username={headerUsername()}
-                  name={headerName()}
-                  category={data?.category ? data.category : {}}
-                  biography={biography()}
                   countAnimationDelay={() => {}}
                   Icon={icons[name]}
                   iconColor={iconColors[name] || '#000'}
@@ -341,3 +157,74 @@ const Single = () => {
 };
 
 export default Single;
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    height: '100vh',
+    background: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 300000,
+  },
+};
+const allowedName = ['instagram', 'tiktok', 'youtube'];
+const footerAnimationDelay = {
+  instagram: 29,
+  tiktok: 23,
+  youtube: 27,
+};
+
+const elementOffSetCount = {
+  instagram: 9,
+  tiktok: 3,
+  youtube: 2,
+};
+
+const icons = {
+  instagram: FaInstagram,
+  tiktok: FaTiktok,
+  youtube: AiOutlineYoutube,
+};
+const iconColors = {
+  instagram: '#DF4482',
+  tiktok: '#000',
+  youtube: '#DF4482',
+};
+
+const useStyles = createUseStyles({
+  main: (size) => {
+    const heightData = (width, height) => {
+      if (height < 768 && width > 768) {
+        return height + 400;
+      }
+      if (width < 768) {
+        if (height > 900) {
+          return height + 100;
+        }
+        if (height > 768) {
+          return height + 300;
+        }
+        if (height > 600) {
+          return height + 500;
+        }
+        return height + 600;
+      }
+
+      return height;
+    };
+    return {
+      height: heightData(size.width, size.height) + 250,
+      overflow: 'hidden',
+      paddingTop: 100,
+      position: 'relative',
+    };
+  },
+});

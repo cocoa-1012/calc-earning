@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineYoutube } from 'react-icons/ai';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import shortid from 'shortid';
 import Item from './Item';
 
 const ResultItems = (props) => {
-  const { instagram, tiktok, youtube, count, setCount } = props;
+  const { count, setCount } = props;
+  const { instagram, tiktok, youtube } = useSelector((state) => {
+    if (Object.keys(state.data).length !== 0) {
+      const instagram = state.data?.instagram ? state.data.instagram : {};
+      const tiktok = state.data?.tiktok ? state.data.tiktok : {};
+      const youtube = state.data?.youtube ? state.data.youtube : {};
+      return { instagram, tiktok, youtube };
+    }
+    return {};
+  });
+
   const instagramData = {
     id: shortid(),
     username: instagram?.username || 'Unknown',
