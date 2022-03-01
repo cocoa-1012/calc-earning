@@ -43,7 +43,7 @@ const Footer = ({ count, isSingle = false }) => {
         </a>
       </motion.div>
       <div className='mt-10'>
-        <ClaimedProfileForm />
+        <ClaimedProfileForm delay={durationForResult()[count + 10]} />
       </div>
     </div>
   );

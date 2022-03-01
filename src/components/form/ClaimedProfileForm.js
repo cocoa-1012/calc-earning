@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
+import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import Loader from '../spinner/Loader';
 
-const ClaimedProfileForm = () => {
+const ClaimedProfileForm = ({ delay }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,6 +33,8 @@ const ClaimedProfileForm = () => {
       setLoading(true);
       setError({});
       const requestDta = {
+        _name: name,
+        email,
         action: 'submit_nex_form',
         company_url: '',
         ip: '',
@@ -75,7 +79,11 @@ const ClaimedProfileForm = () => {
   };
   return (
     <>
-      <div className='flex justify-center items-center'>
+      <motion.div
+        {...defaultAnimationsResult}
+        className='flex justify-center items-center'
+        transition={{ duration: 1, delay }}
+      >
         <form onSubmit={onSubmitHandler} className='flex flex-col items-center'>
           <div className='form-group'>
             <div className='inputWrapper relative overflow-hidden'>
@@ -114,7 +122,7 @@ const ClaimedProfileForm = () => {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
       <Modal
         isOpen={!!(loading || isSuccess)}
         style={customStyles}
