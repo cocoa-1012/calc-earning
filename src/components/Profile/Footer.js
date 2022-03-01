@@ -3,6 +3,7 @@ import React from 'react';
 import icon from '../../images/icons/icon-2.png';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import { durationForResult } from '../../utils/duration';
+import ClaimedProfileForm from '../form/ClaimedProfileForm';
 const Footer = ({ count, isSingle = false }) => {
   return (
     <div>
@@ -41,6 +42,9 @@ const Footer = ({ count, isSingle = false }) => {
           Shoutsy
         </a>
       </motion.div>
+      <div className='mt-10'>
+        <ClaimedProfileForm />
+      </div>
     </div>
   );
 };
