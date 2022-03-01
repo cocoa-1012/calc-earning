@@ -4,7 +4,9 @@ import icon from '../../images/icons/icon-2.png';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import { durationForResult } from '../../utils/duration';
 import ClaimedProfileForm from '../form/ClaimedProfileForm';
-const Footer = ({ count, isSingle = false }) => {
+const Footer = (props) => {
+  const { count, isSingle = false } = props;
+
   return (
     <div>
       {isSingle && (
@@ -43,7 +45,10 @@ const Footer = ({ count, isSingle = false }) => {
         </a>
       </motion.div>
       <div className='mt-10'>
-        <ClaimedProfileForm />
+        <ClaimedProfileForm
+          {...props}
+          delay={durationForResult()[count + 10]}
+        />
       </div>
     </div>
   );

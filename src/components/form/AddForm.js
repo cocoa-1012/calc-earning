@@ -95,7 +95,11 @@ const AddForm = ({ setFetchedData }) => {
         .get(`https://shoutsyapi.com/?${queryString()}`)
         .then(async (res) => {
           setLoading(false);
-          setFetchedData(res.data);
+          setFetchedData(res.data, {
+            tiktokUsername: tiktok,
+            instagramUsername: instagram,
+            youtubeUsername: youtube,
+          });
           const array = Object.values({ ...res.data.social_medias }).filter(
             (item) => item.status === 'success'
           );

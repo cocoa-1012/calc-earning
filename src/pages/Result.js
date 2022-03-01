@@ -49,7 +49,12 @@ const useStyles = createUseStyles({
   },
 });
 
-const Result = ({ data }) => {
+const Result = ({
+  data,
+  tiktokUsername,
+  instagramUsername,
+  youtubeUsername,
+}) => {
   const windowSize = useInnerSize();
   const [size, setSize] = useState(0);
 
@@ -144,7 +149,15 @@ const Result = ({ data }) => {
               count={count}
               setCount={setCount}
             />
-            <Footer count={count} />
+            <Footer
+              count={count}
+              instaData={instagram}
+              tiktokData={tiktok}
+              youtubeData={youtube}
+              instagram={instagramUsername}
+              tiktok={tiktokUsername}
+              youtube={youtubeUsername}
+            />
           </motion.div>
         </div>
       </div>

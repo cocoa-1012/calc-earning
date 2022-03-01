@@ -8,24 +8,35 @@ import Result from './pages/Result';
 import Single from './pages/Single';
 import routes from './routes';
 
-
 const App = () => {
   const location = useLocation();
   const [data, setData] = useState({});
+  const [youtubeUsername, setYoutubeUsername] = useState('');
+  const [instagramUsername, setinItagramUsername] = useState('');
+  const [tiktokUsername, setTiktokUsername] = useState('');
 
-  const setFetchedData = (data) => {
+  const propsObjects = { youtubeUsername, instagramUsername, tiktokUsername };
+
+  const setFetchedData = (data, values) => {
     setData(data);
+    const { tiktokUsername, instagramUsername, youtubeUsername } = values;
+    setYoutubeUsername(youtubeUsername);
+    setinItagramUsername(instagramUsername);
+    setTiktokUsername(tiktokUsername);
   };
 
   return (
     <AnimatePresence exitBeforeEnter>
       <Routes location={location} key={location.pathname}>
-        <Route path={routes.home} element={<Home />}  />
+        <Route path={routes.home} element={<Home />} />
         <Route
           path={routes.add}
           element={<AddItem setFetchedData={setFetchedData} />}
         />
-        <Route path={routes.result} element={<Result data={data} />} />
+        <Route
+          path={routes.result}
+          element={<Result data={data} {...propsObjects} />}
+        />
         <Route path={routes.single} element={<Single />} />
       </Routes>
     </AnimatePresence>

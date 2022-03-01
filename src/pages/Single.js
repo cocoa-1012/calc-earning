@@ -68,6 +68,12 @@ const iconColors = {
   youtube: '#DF4482',
 };
 
+const itemsNameForFooter = {
+  instagram: 'instaData',
+  tiktok: 'tiktokData',
+  youtube: 'youtubeData',
+};
+
 const useStyles = createUseStyles({
   main: (size) => {
     const heightData = (width, height) => {
@@ -115,6 +121,7 @@ const Single = () => {
   const [loading, setLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [searchParam] = useSearchParams();
+  const passAbleData = { [name]: keyword, [itemsNameForFooter[name]]: data };
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -275,7 +282,11 @@ const Single = () => {
               </>
             )}
 
-            <Footer count={footerAnimationDelay[name]} isSingle />
+            <Footer
+              count={footerAnimationDelay[name]}
+              isSingle
+              {...passAbleData}
+            />
           </div>
         </div>
       </div>

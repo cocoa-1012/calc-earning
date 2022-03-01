@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
+import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import Loader from '../spinner/Loader';
 
-const ClaimedProfileForm = () => {
+const ClaimedProfileForm = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,9 +32,19 @@ const ClaimedProfileForm = () => {
     if (Object.keys(errorData).length === 0) {
       setLoading(true);
       setError({});
+      const { instagram, tiktok, youtube, instaData, tiktokData, youtubeData } =
+        props;
+
       const requestDta = {
+        _name: name,
+        email,
         action: 'submit_nex_form',
         company_url: '',
+        instagram: instagram ? instagram : '',
+        instagram_engagement: instagram?.engagement_rate
+          ? instaData.engagement_rate
+          : 0,
+        instagram_followers: instagram?.followers ? instaData.followers : 0,
         ip: '',
         ms_current_step: '1',
         nex_forms_Id: '15',
@@ -40,6 +52,17 @@ const ClaimedProfileForm = () => {
         nf_page_title: 'Shoutsy Signup',
         page: '/signup/calc-signup/',
         paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
+        tiktok: tiktok ? tiktok : '',
+        tiktok_engagement: tiktokData?.engagement_rate
+          ? tiktokData.engagement_rate
+          : 0,
+        tiktok_followers: tiktokData?.followers ? tiktokData.followers : 0,
+
+        youtube: youtube ? youtube : '',
+        youtube_engagement: youtubeData?.engagement_rate
+          ? youtubeData.engagement_rate
+          : 0,
+        youtube_subscribers: youtubeData?.followers ? youtubeData.followers : 0,
       };
 
       const formData = new FormData();
@@ -75,7 +98,11 @@ const ClaimedProfileForm = () => {
   };
   return (
     <>
-      <div className='flex justify-center items-center'>
+      <motion.div
+        {...defaultAnimationsResult}
+        transition={{ duration: 1, delay: props.delay }}
+        className='flex justify-center items-center'
+      >
         <form onSubmit={onSubmitHandler} className='flex flex-col items-center'>
           <div className='form-group'>
             <div className='inputWrapper relative overflow-hidden'>
@@ -114,7 +141,7 @@ const ClaimedProfileForm = () => {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
       <Modal
         isOpen={!!(loading || isSuccess)}
         style={customStyles}
