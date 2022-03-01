@@ -1,81 +1,35 @@
-import axios from 'axios';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import Modal from 'react-modal';
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendClaimRequest } from '../../store/mainActions';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import Loader from '../spinner/Loader';
 
 const ClaimedProfileForm = ({ delay }) => {
+  const searchValues = useSelector((state) => state.form);
+  const { data } = useSelector((state) => state);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const dispatch = useDispatch();
 
   const [errors, setError] = useState({});
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    let emailValidate = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
-    const errorData = {};
-    if (!email) {
-      errorData.email = 'Email is required!';
-    }
-    if (!emailValidate.test(email)) {
-      errorData.email = 'Email must be valid';
-    }
-    if (!name) {
-      errorData.name = 'Name is required!';
-    }
-    setError(errorData);
-
-    if (Object.keys(errorData).length === 0) {
-      setLoading(true);
-      setError({});
-      const requestDta = {
-        _name: name,
-        email,
-        action: 'submit_nex_form',
-        company_url: '',
-        ip: '',
-        ms_current_step: '1',
-        nex_forms_Id: '15',
-        nf_page_id: '25',
-        nf_page_title: 'Shoutsy Signup',
-        page: '/signup/calc-signup/',
-        paypal_return_url: 'https://shoutsy.app/signup/calc-signup',
-      };
-
-      const formData = new FormData();
-
-      Object.entries(requestDta).forEach(([name, value]) => {
-        formData.append(name, value);
-      });
-
-      await axios.post(
-        'https://shoutsy.app/signup/wp-admin/admin-ajax.php',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      setLoading(false);
-      setIsSuccess(true);
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 1500);
-      setEmail('');
-      setName('');
-      setTimeout(() => {
-        toast.info(CustomToastWithLink, {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          progress: undefined,
-        });
-      }, 2000);
-    }
+    const formInputs = { name, email, ...searchValues };
+    const properties = {
+      setError,
+      setLoading,
+      setIsSuccess,
+      setEmail,
+      setName,
+      CustomToastWithLink,
+    };
+    dispatch(sendClaimRequest(formInputs, data, properties));
   };
   return (
     <>

@@ -1,40 +1,96 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import shortid from 'shortid';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import { durationForResult } from '../../utils/duration';
 import { sliceString } from '../../utils/string';
 import './header.css';
 
-const Header = ({
-  profilePicture,
-  username,
-  name,
-  category,
-  biography,
-  countAnimationDelay,
-  Icon,
-  iconColor,
-}) => {
+const Header = ({ countAnimationDelay, Icon, iconColor }) => {
+  const data = useSelector((state) => {
+    if (Object.keys(state.data).length !== 0) {
+      return state.data;
+    }
+    return {};
+  });
+
+  const { instagram, tiktok, youtube } = data;
+
   const [hobbyItems, setHobbyItems] = useState([]);
 
   useEffect(() => {
+    const intaCategory = data.instagram?.category
+      ? data.instagram.category
+      : {};
     setHobbyItems(
-      Object.values(category).map((value) => {
+      Object.values(intaCategory).map((value) => {
         return { id: shortid(), name: value };
       })
     );
-  }, [category]);
+  }, [data.instagram]);
 
   useEffect(() => {
     countAnimationDelay(hobbyItems.length + 4);
   }, [hobbyItems, countAnimationDelay]);
 
+  const profilePicture = () => {
+    if (instagram?.profile_pic_url) {
+      return instagram?.profile_pic_url;
+    }
+    if (tiktok?.avatar_url) {
+      return tiktok?.avatar_url;
+    }
+    if (tiktok?.profile_pic_url) {
+      return tiktok?.profile_pic_url;
+    }
+    if (youtube?.avatar_url) {
+      return youtube?.avatar_url;
+    }
+    return '';
+  };
+  const headerName = () => {
+    if (instagram?.full_name) {
+      return instagram?.full_name;
+    }
+    if (tiktok?.username) {
+      return tiktok?.username;
+    }
+    if (youtube?.username) {
+      return youtube?.username;
+    }
+    return '';
+  };
+  const headerUsername = () => {
+    if (instagram?.username) {
+      return instagram?.username;
+    }
+    if (tiktok?.username) {
+      return tiktok.username;
+    }
+    if (youtube?.username) {
+      return youtube.username;
+    }
+    return '';
+  };
+  const biography = () => {
+    if (instagram?.biography) {
+      return instagram?.biography;
+    }
+    if (tiktok?.biography) {
+      return tiktok.biography;
+    }
+    if (tiktok?.about) {
+      return tiktok.about;
+    }
+    return '';
+  };
+
   return (
     <div className='md:w-10/12 mlb:mx-auto '>
       <div className='md:flex gap-5 items-center'>
         <div className='text-center'>
-          {profilePicture && (
+          {profilePicture() && (
             <motion.div
               {...defaultAnimationsResult}
               transition={{ duration: 1, delay: durationForResult()[0] }}
@@ -42,7 +98,7 @@ const Header = ({
             >
               <div className='mx-auto w-48 h-48 rounded-full overflow-hidden border-1'>
                 <img
-                  src={profilePicture}
+                  src={profilePicture()}
                   alt=''
                   className='w-full h-full object-cover'
                 />
@@ -62,10 +118,10 @@ const Header = ({
                     fontSize: '30px',
                   }}
                 />
-                <p>@{username}</p>
+                <p>@{headerUsername()}</p>
               </div>
             ) : (
-              <span>@{username}</span>
+              <span>@{headerUsername()}</span>
             )}
           </motion.p>
         </div>
@@ -75,7 +131,7 @@ const Header = ({
             transition={{ duration: 1, delay: durationForResult()[2] }}
             className='text-5xl text-white mb-3  font-dm-sans font-bold'
           >
-            {name}
+            {headerName()}
           </motion.h1>
 
           <motion.p
@@ -83,7 +139,7 @@ const Header = ({
             transition={{ duration: 1, delay: durationForResult()[3] }}
             className={`text-white text-xl lg:text-2xl  font-dm-sans font-bold`}
           >
-            {sliceString(biography) || 'No Biography'}
+            {sliceString(biography()) || 'No Biography'}
           </motion.p>
 
           <motion.ul

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Footer from '../components/Profile/Footer';
 import Header from '../components/Profile/Header';
@@ -49,7 +50,14 @@ const useStyles = createUseStyles({
   },
 });
 
-const Result = ({ data }) => {
+const Result = () => {
+  const data = useSelector((state) => {
+    if (Object.keys(state.data).length !== 0) {
+      return state.data;
+    }
+    return {};
+  });
+
   const windowSize = useInnerSize();
   const [size, setSize] = useState(0);
 
@@ -62,88 +70,18 @@ const Result = ({ data }) => {
     return <Navigate to={routes.add} />;
   }
 
-  const {
-    social_medias: { instagram, tiktok, youtube },
-  } = data;
-
-  const profilePicture = () => {
-    if (instagram?.profile_pic_url) {
-      return instagram?.profile_pic_url;
-    }
-    if (tiktok?.avatar_url) {
-      return tiktok?.avatar_url;
-    }
-    if (tiktok?.profile_pic_url) {
-      return tiktok?.profile_pic_url;
-    }
-    if (youtube?.avatar_url) {
-      return youtube?.avatar_url;
-    }
-    return '';
-  };
-  const headerName = () => {
-    if (instagram?.full_name) {
-      return instagram?.full_name;
-    }
-    if (tiktok?.username) {
-      return tiktok?.username;
-    }
-    if (youtube?.username) {
-      return youtube?.username;
-    }
-    return '';
-  };
-  const headerUsername = () => {
-    if (instagram?.username) {
-      return instagram?.username;
-    }
-    if (tiktok?.username) {
-      return tiktok.username;
-    }
-    if (youtube?.username) {
-      return youtube.username;
-    }
-    return '';
-  };
-  const biography = () => {
-    if (instagram?.biography) {
-      return instagram?.biography;
-    }
-    if (tiktok?.biography) {
-      return tiktok.biography;
-    }
-    if (tiktok?.about) {
-      return tiktok.about;
-    }
-    return '';
-  };
-
   return (
     <div
       style={{
         backgroundImage: `url(${overlay}) ,url(${bg})`,
       }}
-      //   className='bg-cover bg-no-repeat bg-top min-h-screen pt-24 px-2 xs:px-0 relative'
       className={`bg-cover bg-center md:overflow-hidden ${classes.main}`}
     >
       <div className='container mx-auto'>
         <div className='lg:absolute lg:top-[50%] lg:left-[50%] w-full px-0 md:px-5 xs:px-10 xl:w-9/12 2xl:w-9/12 3xl:w-7/12 resultPageWrapper'>
           <motion.div>
-            <Header
-              profilePicture={profilePicture()}
-              username={headerUsername()}
-              name={headerName()}
-              category={instagram?.category || {}}
-              biography={biography()}
-              countAnimationDelay={setCount}
-            />
-            <ResultItems
-              instagram={instagram ? instagram : {}}
-              tiktok={tiktok ? tiktok : {}}
-              youtube={youtube ? youtube : {}}
-              count={count}
-              setCount={setCount}
-            />
+            <Header countAnimationDelay={setCount} />
+            <ResultItems count={count} setCount={setCount} />
             <Footer count={count} />
           </motion.div>
         </div>
