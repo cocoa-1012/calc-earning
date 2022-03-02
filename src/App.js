@@ -1,6 +1,12 @@
 import { AnimatePresence } from 'framer-motion';
 import React from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useSearchParams,
+} from 'react-router-dom';
 import './App.css';
 import AddItem from './pages/AddItem';
 import Home from './pages/Home';
@@ -18,9 +24,26 @@ const App = () => {
         <Route path={routes.add} element={<AddItem />} />
         <Route path={routes.result} element={<Result />} />
         <Route path={routes.single} element={<Single />} />
+        <Route path={'*'} element={<NavigateIfNotExist />} />
       </Routes>
     </AnimatePresence>
   );
+};
+
+const NavigateIfNotExist = () => {
+  const [searchParam] = useSearchParams();
+  const { pathname } = useLocation();
+  const isForm = searchParam.get('form');
+
+  if (isForm) {
+    return <Navigate to={routes.add + '?error=No data Found'} />;
+  }
+
+  if (pathname === routes.add) {
+    return null;
+  }
+
+  return <Navigate to={routes.home + '?error=No data Found'} />;
 };
 
 export default App;
