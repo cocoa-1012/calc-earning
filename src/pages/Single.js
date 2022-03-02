@@ -91,7 +91,7 @@ const Single = () => {
               </>
             )}
 
-            <Footer count={footerAnimationDelay[name]} isSingle />
+            <Footer count={footerAnimationDelay[name]} />
           </div>
         </div>
       </div>

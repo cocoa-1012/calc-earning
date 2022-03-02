@@ -133,6 +133,9 @@ export const sendClaimRequest = async (formInputs, data, props) => {
     setError(errorData);
 
     if (Object.keys(errorData).length === 0) {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-305656401/yheZCITvuJkDENHk35EB',
+      });
       setLoading(true);
       const requestDta = {
         _name: name,

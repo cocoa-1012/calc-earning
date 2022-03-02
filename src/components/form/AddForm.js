@@ -58,9 +58,6 @@ const AddForm = () => {
     const { hasError } = addFormValidation(data);
     setShowError(hasError);
     if (!hasError) {
-      window.gtag('event', 'conversion', {
-        send_to: 'AW-305656401/yheZCITvuJkDENHk35EB',
-      });
       //   dispatch action
       dispatch(
         fetchSocialData(
@@ -139,7 +136,7 @@ const AddForm = () => {
               <div className='inputWrapper'>
                 <input
                   type='text'
-                  placeholder='@Youtube ID'
+                  placeholder='@Youtube Url'
                   className='input-box'
                   value={youtube}
                   onChange={(e) => setYoutube(e.target.value)}
