@@ -15,6 +15,7 @@ const ClaimedProfileForm = ({ delay }) => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const dispatch = useDispatch();
 
   const [errors, setError] = useState({});
@@ -27,6 +28,7 @@ const ClaimedProfileForm = ({ delay }) => {
       setIsSuccess,
       setEmail,
       setName,
+      setIsSubmitted,
       CustomToastWithLink,
     };
     dispatch(sendClaimRequest(formInputs, data, properties));
@@ -71,8 +73,12 @@ const ClaimedProfileForm = ({ delay }) => {
           </div>
 
           <div className='mb-5'>
-            <button className='btn-outline-claim text-lg' type='submit'>
-              Claim Profile
+            <button
+              className='btn-outline-claim text-lg disabled:bg-[#E7F0FF] disabled:border-[#E7F0FF] disabled:text-gray-600 disabled:cursor-not-allowed'
+              disabled={isSubmitted}
+              type='submit'
+            >
+              {isSubmitted ? 'Submitted' : 'Claim Profile'}
             </button>
           </div>
         </form>
