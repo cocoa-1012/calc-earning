@@ -117,6 +117,7 @@ export const sendClaimRequest = async (formInputs, data, props) => {
       setEmail,
       setName,
       CustomToastWithLink,
+      setIsSubmitted,
     } = props;
     let emailValidate = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
     const errorData = {};
@@ -181,6 +182,7 @@ export const sendClaimRequest = async (formInputs, data, props) => {
       );
       setLoading(false);
       setIsSuccess(true);
+      setIsSubmitted(true);
       setTimeout(() => {
         setIsSuccess(false);
         toast.success(CustomToastWithLink, {
