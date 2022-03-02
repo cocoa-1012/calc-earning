@@ -4,19 +4,9 @@ import icon from '../../images/icons/icon-2.png';
 import { defaultAnimationsResult } from '../../utils/defaultAnimations';
 import { durationForResult } from '../../utils/duration';
 import ClaimedProfileForm from '../form/ClaimedProfileForm';
-const Footer = ({ count, isSingle = false }) => {
+const Footer = ({ count }) => {
   return (
     <div>
-      {isSingle && (
-        <motion.h3
-          {...defaultAnimationsResult}
-          transition={{ duration: 1, delay: durationForResult()[count + 1] }}
-          className='sm:text-4xl font-dm-sans  font-bold text-white text-center mb-6 mt-4'
-        >
-          Claim your profile
-        </motion.h3>
-      )}
-
       <motion.div
         {...defaultAnimationsResult}
         transition={{ duration: 1, delay: durationForResult()[count + 1] }}
@@ -42,6 +32,13 @@ const Footer = ({ count, isSingle = false }) => {
           Shoutsy
         </a>
       </motion.div>
+      <motion.h3
+        {...defaultAnimationsResult}
+        transition={{ duration: 1, delay: durationForResult()[count + 1] }}
+        className='sm:text-4xl font-dm-sans  font-bold text-white text-center mb-6 mt-4'
+      >
+        Claim your profile
+      </motion.h3>
       <div className='mt-10'>
         <ClaimedProfileForm delay={durationForResult()[count + 10]} />
       </div>
