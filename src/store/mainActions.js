@@ -28,7 +28,13 @@ export const fetchSocialData = (data, props, cb) => (dispatch) => {
     const firstItem = arrayOfItems.filter(([key]) => {
       return key !== 'name' && key !== 'email';
     })[0];
-
+    if (firstItem[0] === 'youtube') {
+      const splitValue = firstItem[1].split('/');
+      const valueToPass = splitValue[splitValue.length - 1];
+      navigate(`/${firstItem[0]}/${removeAtRate(valueToPass)}?form=true`);
+      cb(true);
+      return;
+    }
     navigate(`/${firstItem[0]}/${removeAtRate(firstItem[1])}?form=true`);
     cb(true);
     return;
