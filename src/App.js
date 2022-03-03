@@ -32,8 +32,16 @@ const App = () => {
 
 const NavigateIfNotExist = () => {
   const [searchParam] = useSearchParams();
+
   const { pathname } = useLocation();
   const isForm = searchParam.get('form');
+
+  const pathnameSplit = pathname.split('/').filter((i) => !!i);
+  if (pathnameSplit[0] === 'youtube') {
+    return (
+      <Navigate to={`/youtube/${pathnameSplit[pathnameSplit.length - 1]}`} />
+    );
+  }
 
   if (isForm) {
     return <Navigate to={routes.add + '?error=No data Found'} />;
